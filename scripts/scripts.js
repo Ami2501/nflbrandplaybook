@@ -68,6 +68,14 @@ function buildAutoBlocks(main) {
     }
 
     buildHeroBlock(main);
+
+    // Remove orphaned metadata-like sections (e.g. stale cache)
+    main.querySelectorAll(':scope > div').forEach((section) => {
+      const ps = section.querySelectorAll(':scope > p');
+      if (ps.length === 2 && ps[0].textContent.trim() === 'theme') {
+        section.remove();
+      }
+    });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -187,3 +195,10 @@ async function loadPage() {
 }
 
 loadPage();
+
+// DA Live Preview
+(async function loadDa() {
+  if (!new URL(window.location.href).searchParams.get('dapreview')) return;
+  // eslint-disable-next-line import/no-unresolved
+  import('https://da.live/scripts/dapreview.js').then(({ default: daPreview }) => daPreview(loadPage));
+}());
