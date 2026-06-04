@@ -242,6 +242,7 @@ main img {
 /* Header / Nav */
 header {
   height: var(--nav-height);
+  font-family: var(--heading-font-family);
 }
 
 header .header,
