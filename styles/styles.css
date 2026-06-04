@@ -242,9 +242,10 @@ main img {
 /* Header / Nav */
 header {
   height: var(--nav-height);
-  font-family: var(--heading-font-family);
 }
-
+header a {
+    font-family: var(--heading-font-family);
+}
 header .header,
 footer .footer {
   visibility: hidden;
