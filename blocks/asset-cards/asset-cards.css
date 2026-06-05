@@ -96,7 +96,7 @@
 
 /* Accent card variant */
 .asset-cards.accent .asset-card {
-  background: linear-gradient(135deg, #013369 0%, #01245a 100%);
+  background: linear-gradient(135deg, #0074EE 0%, #004ba3 100%);
   border-color: var(--nfl-gold);
 }
 
