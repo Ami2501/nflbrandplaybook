@@ -41,7 +41,7 @@
 }
  
 /* Title — right side */
-.hero-with-logo .hero-with-logo-title {
+.hero-with-logo .hero-with-logo-title h1 {
   font-family: var(--heading-font-family);
   font-weight: 900;
   font-size: 52px;
