@@ -42,6 +42,10 @@
  
 /* Title — right side */
 .hero-with-logo .hero-with-logo-title {
+  font-family: var(--heading-font-family);
+  font-weight: 900;
+  font-size: 52px;
+  letter-spacing: -0.01em;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
