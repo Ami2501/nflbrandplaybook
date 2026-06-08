@@ -13,6 +13,7 @@
   --nfl-grey-1: #455560;
   --nfl-grey-2: #8b99a1;
   --nfl-grey-3: #dae1e6;
+  --nfl-shield-red: #d50A0A;
 
   /* Semantic tokens */
   --color-background: var(--nfl-blue);
