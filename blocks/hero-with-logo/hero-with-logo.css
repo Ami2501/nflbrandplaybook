@@ -41,11 +41,7 @@
 }
  
 /* Title — right side */
-.hero-with-logo .hero-with-logo-title h1 {
-  font-family: var(--heading-font-family);
-  font-weight: 900;
-  font-size: 52px;
-  letter-spacing: -0.01em;
+.hero-with-logo .hero-with-logo-title {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -69,6 +65,13 @@
   font-size: var(--body-font-size-m, 1rem);
   color: var(--text-color-secondary, #555);
   line-height: 1.6;
+}
+ 
+/* Each word on its own line */
+.hero-with-logo .hero-with-logo-title h1 .hero-with-logo-word,
+.hero-with-logo .hero-with-logo-title h2 .hero-with-logo-word,
+.hero-with-logo .hero-with-logo-title h3 .hero-with-logo-word {
+  display: block;
 }
  
 /* Responsive: stack on small screens */
