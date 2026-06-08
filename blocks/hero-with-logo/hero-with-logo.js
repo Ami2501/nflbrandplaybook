@@ -1,78 +1,54 @@
 // hero-with-logo.js
 export default function decorate(block) {
-  // Expecting default DA Live / Franklin table markup:
-  // <div class="hero-with-logo block">
-  //   <div>
-  //     <div>logo cell</div>
-  //     <div>headline cell</div>
-  //   </div>
-  // </div>
+  // Here "block" is the <div class="default-content-wrapper"> in your screenshot
 
-  // 1. Get the two main cells (logo + title)
-  const row = block.firstElementChild;
-  if (!row) return;
+  const paragraphs = [...block.querySelectorAll(':scope > p')];
+  if (paragraphs.length === 0) return;
 
-  const cells = [...row.children];
-  const logoCell = cells[0];
-  const titleCell = cells[1] || cells[0]; // fallback: single-cell layout
+  const logoP = paragraphs[0];
+  const titleP = paragraphs[1];
 
-  // 2. Create inner wrapper
+  // Create the hero root element
+  const hero = document.createElement('div');
+  hero.className = 'hero-with-logo';
+
   const inner = document.createElement('div');
   inner.className = 'hero-with-logo-inner';
 
-  // 3. Logo wrapper (left)
-  if (logoCell) {
+  // ---- Logo (left) --------------------------------------------------------
+  if (logoP) {
     const logoWrap = document.createElement('div');
     logoWrap.className = 'hero-with-logo-logo';
-    // Move original logo content into wrapper
-    while (logoCell.firstChild) {
-      logoWrap.appendChild(logoCell.firstChild);
+
+    // Move picture (or whatever is inside first <p>) into logo wrapper
+    while (logoP.firstChild) {
+      logoWrap.appendChild(logoP.firstChild);
     }
+
     inner.appendChild(logoWrap);
   }
 
-  // 4. Title wrapper (right) with word splitting
-  if (titleCell) {
+  // ---- Title (right) – split into words ----------------------------------
+  if (titleP) {
     const titleWrap = document.createElement('div');
     titleWrap.className = 'hero-with-logo-title';
 
-    // Find a heading (h1–h3). If none, use first element as heading.
-    let heading = titleCell.querySelector('h1, h2, h3');
-    if (!heading) {
-      heading = titleCell.firstElementChild;
-    }
+    // Treat the text in the second <p> as the headline
+    const heading = document.createElement('h1');
+    const rawText = titleP.textContent.trim();
+    const words = rawText.length ? rawText.split(/\s+/) : [];
 
-    if (heading) {
-      // Split text content into words
-      const text = heading.textContent.trim();
-      const words = text.length ? text.split(/\s+/) : [];
+    heading.innerHTML = words
+      .map((w) => `<span class="hero-with-logo-word">${w}</span>`)
+      .join('');
 
-      // Build spans: one word per line
-      heading.innerHTML = words
-        .map((word) => `<span class="hero-with-logo-word">${word}</span>`)
-        .join('');
-
-      titleWrap.appendChild(heading);
-    }
-
-    // Move any remaining siblings in title cell (e.g., subtitle <p>)
-    // AFTER the heading
-    const leftovers = [];
-    while (titleCell.firstChild) {
-      leftovers.push(titleCell.firstChild);
-      titleCell.removeChild(titleCell.firstChild);
-    }
-    leftovers.forEach((node) => {
-      // avoid re‑adding the heading we already moved
-      if (node !== heading) {
-        titleWrap.appendChild(node);
-      }
-    });
-
+    titleWrap.appendChild(heading);
     inner.appendChild(titleWrap);
   }
 
-  // 5. Replace original block content with our new structure
+  hero.appendChild(inner);
+
+  // Replace the default-content-wrapper contents with the new hero
   block.textContent = '';
-  block.appendChild(inner);
+  block.appendChild(hero);
 }
