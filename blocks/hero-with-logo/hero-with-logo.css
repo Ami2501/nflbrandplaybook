@@ -62,7 +62,7 @@
 /* Each word on its own line */
 .hero-with-logo .hero-with-logo-title .hero-with-logo-word {
   display: block !important;
-  color: var(--text-color-light, #a0b4c8);
+  color: var(--color-heading, #001D3C);
 }
 
 /* First word — white */
