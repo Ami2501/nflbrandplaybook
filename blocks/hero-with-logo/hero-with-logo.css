@@ -3,26 +3,25 @@
    Structure (produced by JS):
    .hero-with-logo
      └── .hero-with-logo-inner
-           ├── .hero-with-logo-image   (row 0 — left)
-           │     └── picture > img
-           └── .hero-with-logo-title   (row 1 — right)
-                 └── h1
-                       └── span.hero-with-logo-word (× N)
+           ├── .hero-with-logo-title   (left)
+           │     └── h1
+           │           └── span.hero-with-logo-word (× N)
+           └── .hero-with-logo-image   (right)
+                 └── picture > img
    ============================================ */
- 
-/* Outer block wrapper */
+
 .hero-with-logo-wrapper {
   width: 100%;
   background-color: var(--color-background, #0a1f3c);
 }
- 
+
 .hero-with-logo {
   max-width: var(--page-width, 1200px);
   margin: 0 auto;
   padding: 0 var(--spacing-m, 24px);
 }
- 
-/* Inner flex row: image left, title right */
+
+/* Inner flex row: title left, image right */
 .hero-with-logo .hero-with-logo-inner {
   display: flex;
   flex-direction: row;
@@ -31,8 +30,51 @@
   gap: 0;
   padding: 32px 0;
 }
- 
-/* ── LEFT: Image ─────────────────────────── */
+
+/* ── LEFT: Title ─────────────────────────── */
+.hero-with-logo .hero-with-logo-title {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  font-family: var(--heading-font-family);
+  font-weight: 900;
+  font-size: 52px;
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+
+  padding: 12px 20px;
+  margin: 0;
+  background-color: transparent;
+  white-space: normal;
+}
+
+.hero-with-logo .hero-with-logo-title h1 {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+/* Each word on its own line */
+.hero-with-logo .hero-with-logo-title .hero-with-logo-word {
+  display: block;
+  color: var(--text-color-light, #a0b4c8);
+}
+
+/* First word — white */
+.hero-with-logo .hero-with-logo-title .hero-with-logo-word--first {
+  color: #ffffff;
+}
+
+/* Last word — red */
+.hero-with-logo .hero-with-logo-title .hero-with-logo-word--last {
+  color: #e00000;
+}
+
+/* ── RIGHT: Image ────────────────────────── */
 .hero-with-logo .hero-with-logo-image {
   flex: 0 0 auto;
   display: flex;
@@ -41,76 +83,35 @@
   overflow: hidden;
   margin: 0;
 }
- 
+
 .hero-with-logo .hero-with-logo-image picture {
   display: flex;
   align-items: center;
 }
- 
+
 .hero-with-logo .hero-with-logo-image img {
- display: block;
-  width: 100%;
-  max-width: 480px;   /* adjust to suit your design */
+  display: block;
+  width: 50%;
   height: auto;
   object-fit: cover;
 }
- 
-/* ── RIGHT: Title ────────────────────────── */
-.hero-with-logo .hero-with-logo-title {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
- 
-  font-family: var(--heading-font-family);
-  font-weight: 900;
-  font-size: 96px;
-  line-height: 0.95;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
- 
-  padding: 12px 20px;
-  margin: 0;
-  background-color: transparent;
-  white-space: normal;
-}
- 
-/* Reset h1 so it inherits the title div's font styles */
-.hero-with-logo .hero-with-logo-title h1 {
-  margin: 0;
-  padding: 0;
-  font: inherit;
-  color: inherit;
-}
- 
-/* Each word on its own line */
-.hero-with-logo .hero-with-logo-title .hero-with-logo-word {
-  display: block;
-  color: var(--nfl-impact-blue, #0074EE);
-}
- 
-/* First word — white */
-.hero-with-logo .hero-with-logo-title .hero-with-logo-word:first-child {
-  color: #ffffff;
-}
- 
+
 /* ── Responsive ──────────────────────────── */
 @media (max-width: 768px) {
   .hero-with-logo .hero-with-logo-inner {
     flex-direction: column;
     align-items: flex-start;
     padding: 24px 0;
-      width: 100%;
   }
- 
+
   .hero-with-logo .hero-with-logo-image {
     width: 100%;
   }
- 
+
   .hero-with-logo .hero-with-logo-image img {
-    max-width: 100%;
+    width: 100%;
   }
- 
+
   .hero-with-logo .hero-with-logo-title {
     width: 100%;
     padding: 12px 14px;
