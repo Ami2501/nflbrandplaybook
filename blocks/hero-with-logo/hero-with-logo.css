@@ -1,36 +1,40 @@
-/* ── Wrapper background ─────────────────────────────────────────────────── */
+/******************************************************************************/
+/* HERO WITH LOGO – COMPLETE CSS                                             */
+/******************************************************************************/
+
+/* Wrapper background */
 .hero-with-logo-wrapper {
   width: 100%;
   background-color: var(--color-background, #0a1f3c); /* navy */
 }
 
-/* ── Block container ────────────────────────────────────────────────────── */
+/* Block container */
 .hero-with-logo {
   max-width: var(--page-width, 1200px);
   margin: 0 auto;
   padding: 0 var(--spacing-m, 24px);
 }
 
-/* ── Inner flex row, logo + title with no gap ───────────────────────────── */
+/* Inner flex row, logo + title with no gap */
 .hero-with-logo .hero-with-logo-inner {
   display: flex;
   flex-direction: row;
   align-items: stretch;
   justify-content: flex-start;
-  gap: 0;                 /* IMPORTANT: no space between logo and title */
+  gap: 0;                 /* no space between logo and title */
   padding: 32px 0;
 }
 
-/* ── Logo (left) ────────────────────────────────────────────────────────── */
+/* Logo (left) */
 .hero-with-logo .hero-with-logo-logo {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 12px 16px;
-  margin: 0;              /* no margin so it touches the title */
+  margin: 0;
   background-color: #ffffff;
-  border-radius: 4px 0 0 4px; /* only outer-left corners rounded */
+  border-radius: 4px 0 0 4px;
 }
 
 .hero-with-logo .hero-with-logo-logo picture {
@@ -45,14 +49,15 @@
   object-fit: contain;
 }
 
-/* ── Title (right) ──────────────────────────────────────────────────────── */
+/* ── Title (right) – your updated typography ─────────────────────────────── */
 .hero-with-logo .hero-with-logo-title {
- font-family: var(--heading-font-family);
+  font-family: var(--heading-font-family);
   font-weight: 900;
   font-size: 52px;
   line-height: 0.95;
   text-transform: uppercase;
   letter-spacing: -0.01em;
+
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -60,24 +65,23 @@
   padding: 12px 20px;
   margin: 0;              /* no margin so it touches the logo */
   background-color: transparent;
-  white-space: normal;    /* ensure words can wrap */
+  white-space: normal;    /* ensure words can wrap / break onto lines */
 }
 
+/* Headline elements inside title */
 .hero-with-logo .hero-with-logo-title h1,
 .hero-with-logo .hero-with-logo-title h2,
 .hero-with-logo .hero-with-logo-title h3 {
   margin: 0;
   padding: 0;
-  font-size: var(--heading-font-size-xxl, 2.5rem);
-  font-weight: 700;
-  line-height: 1.15;
-  color: var(--text-color-light, #a0b4c8);
-  letter-spacing: 0.01em;
+  font: inherit;          /* use the font settings from .hero-with-logo-title */
+  color: inherit;         /* colors handled by spans */
 }
 
-/* ── Each word of the headline on its own line ─────────────────────────── */
+/* Each word on its own line */
 .hero-with-logo .hero-with-logo-title .hero-with-logo-word {
-  display: block;         /* critical: forces a line break after each word */
+  display: block;                             /* key: one word per line */
+  color: var(--text-color-light, #a0b4c8);    /* default color for words */
 }
 
 /* First word in white */
@@ -85,20 +89,21 @@
   color: #ffffff;
 }
 
-/* ── Optional subtitle / body under the headline ───────────────────────── */
+/* Optional subtitle / body under the headline */
 .hero-with-logo .hero-with-logo-title p {
   margin: 8px 0 0;
   font-size: var(--body-font-size-m, 1rem);
   color: var(--text-color-secondary, #6b8399);
   line-height: 1.6;
+  text-transform: none;    /* keep subtitle normal case */
 }
 
-/* ── Responsive layout ──────────────────────────────────────────────────── */
+/* Responsive */
 @media (max-width: 768px) {
   .hero-with-logo .hero-with-logo-inner {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0;                      /* still no visual gap between elements */
+    gap: 0;
     padding: 24px 0;
   }
 
@@ -106,7 +111,7 @@
     width: 100%;
     justify-content: flex-start;
     padding: 10px 14px;
-    border-radius: 4px 4px 0 0;  /* top corners rounded when stacked */
+    border-radius: 4px 4px 0 0;
   }
 
   .hero-with-logo .hero-with-logo-logo img {
@@ -116,11 +121,7 @@
   .hero-with-logo .hero-with-logo-title {
     width: 100%;
     padding: 12px 14px;
-  }
-
-  .hero-with-logo .hero-with-logo-title h1,
-  .hero-with-logo .hero-with-logo-title h2,
-  .hero-with-logo .hero-with-logo-title h3 {
-    font-size: var(--heading-font-size-l, 1.75rem);
+    font-size: var(--heading-font-size-l, 1.75rem); /* scale down on mobile */
+    line-height: 1.05;
   }
 }
