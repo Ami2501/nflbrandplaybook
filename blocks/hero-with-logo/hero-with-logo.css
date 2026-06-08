@@ -49,7 +49,8 @@
  
 .hero-with-logo .hero-with-logo-image img {
  display: block;
-  width: 50%;
+  width: 100%;
+  max-width: 480px;   /* adjust to suit your design */
   height: auto;
   object-fit: cover;
 }
