@@ -80,6 +80,11 @@
   display: block;         /* critical: forces a line break after each word */
 }
 
+/* First word in white */
+.hero-with-logo .hero-with-logo-title .hero-with-logo-word:first-child {
+  color: #ffffff;
+}
+
 /* ── Optional subtitle / body under the headline ───────────────────────── */
 .hero-with-logo .hero-with-logo-title p {
   margin: 8px 0 0;
