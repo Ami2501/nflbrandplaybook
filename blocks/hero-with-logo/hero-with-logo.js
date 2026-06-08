@@ -1,16 +1,12 @@
 export default function decorate(block) {
-  // Get all rows from the block
   const rows = [...block.children];
  
-  // Create the hero inner wrapper
   const heroInner = document.createElement('div');
   heroInner.classList.add('hero-with-logo-inner');
  
-  // Left side: logo content
   const logoWrapper = document.createElement('div');
   logoWrapper.classList.add('hero-with-logo-logo');
  
-  // Right side: title content
   const titleWrapper = document.createElement('div');
   titleWrapper.classList.add('hero-with-logo-title');
  
@@ -28,9 +24,16 @@ export default function decorate(block) {
     }
   });
  
+  // Split each heading's text so every word renders on its own line
+  titleWrapper.querySelectorAll('h1, h2, h3').forEach((heading) => {
+    const words = heading.textContent.trim().split(/\s+/);
+    heading.innerHTML = words
+      .map((word) => `<span class="hero-with-logo-word">${word}</span>`)
+      .join('');
+  });
+ 
   heroInner.append(logoWrapper, titleWrapper);
  
-  // Clear the block and append structured markup
   block.textContent = '';
   block.append(heroInner);
 }
