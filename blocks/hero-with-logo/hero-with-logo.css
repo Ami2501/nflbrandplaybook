@@ -39,7 +39,7 @@
   justify-content: center;
   max-width: 400px;
 
-  font-family: var(--nfl-blue);
+  font-family: var(--heading-font-family);
   font-weight: 900;
   font-size: 96px;
   line-height: 0.95;
