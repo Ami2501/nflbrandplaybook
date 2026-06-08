@@ -1,23 +1,47 @@
-/* Inner flex row: title left, image right — close together */
+/* ============================================
+   HERO WITH LOGO — Block Styles
+   Structure (produced by JS):
+   .hero-with-logo
+     └── .hero-with-logo-inner
+           ├── .hero-with-logo-title   (left)
+           │     └── h1
+           │           └── span.hero-with-logo-word (× N)
+           └── .hero-with-logo-image   (right)
+                 └── picture > img
+   ============================================ */
+
+.hero-with-logo-wrapper {
+  width: 100%;
+  background-color: var(--color-background, #0a1f3c);
+}
+
+.hero-with-logo {
+  max-width: var(--page-width, 1200px);
+  margin: 0 auto;
+  padding: 0 var(--spacing-m, 24px);
+}
+
+/* Inner flex row: title left, image right */
 .hero-with-logo .hero-with-logo-inner {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;  /* both elements hug the left */
+  justify-content: flex-start;
   gap: 0;
   padding: 32px 0;
 }
 
 /* ── LEFT: Title ─────────────────────────── */
 .hero-with-logo .hero-with-logo-title {
-  flex: 0 0 auto;              /* changed from 1 1 auto — stops it stretching */
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  max-width: 400px;
 
   font-family: var(--heading-font-family);
   font-weight: 900;
-  font-size: 96px;             /* updated from 52px */
+  font-size: 96px;
   line-height: 0.95;
   text-transform: uppercase;
   letter-spacing: -0.01em;
@@ -28,6 +52,29 @@
   white-space: normal;
 }
 
+.hero-with-logo .hero-with-logo-title h1 {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+/* Each word on its own line */
+.hero-with-logo .hero-with-logo-title .hero-with-logo-word {
+  display: block !important;
+  color: var(--text-color-light, #a0b4c8);
+}
+
+/* First word — white */
+.hero-with-logo .hero-with-logo-title .hero-with-logo-word--first {
+  color: #ffffff;
+}
+
+/* Last word — red */
+.hero-with-logo .hero-with-logo-title .hero-with-logo-word--last {
+  color: #e00000;
+}
+
 /* ── RIGHT: Image ────────────────────────── */
 .hero-with-logo .hero-with-logo-image {
   flex: 0 0 auto;
@@ -36,6 +83,11 @@
   justify-content: center;
   overflow: hidden;
   margin: 0;
+}
+
+.hero-with-logo .hero-with-logo-image picture {
+  display: flex;
+  align-items: center;
 }
 
 .hero-with-logo .hero-with-logo-image img {
@@ -53,18 +105,20 @@
     padding: 24px 0;
   }
 
+  .hero-with-logo .hero-with-logo-title {
+    flex: 0 0 auto;
+    max-width: 100%;
+    width: 100%;
+    padding: 12px 0;
+    font-size: var(--heading-font-size-l, 1.75rem);
+    line-height: 1.05;
+  }
+
   .hero-with-logo .hero-with-logo-image {
     width: 100%;
   }
 
   .hero-with-logo .hero-with-logo-image img {
     width: 100%;
-  }
-
-  .hero-with-logo .hero-with-logo-title {
-    width: 100%;
-    padding: 12px 0;
-    font-size: var(--heading-font-size-l, 1.75rem);
-    line-height: 1.05;
   }
 }
