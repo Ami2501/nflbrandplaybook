@@ -1,11 +1,7 @@
-/******************************************************************************/
-/* HERO WITH LOGO – COMPLETE CSS                                             */
-/******************************************************************************/
-
 /* Wrapper background */
 .hero-with-logo-wrapper {
   width: 100%;
-  background-color: var(--color-background, #0a1f3c); /* navy */
+  background-color: var(--color-background, #0a1f3c);
 }
 
 /* Block container */
@@ -15,17 +11,17 @@
   padding: 0 var(--spacing-m, 24px);
 }
 
-/* Inner flex row, logo + title with no gap */
+/* Inner flex row: logo left, title right */
 .hero-with-logo .hero-with-logo-inner {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: center;
   justify-content: flex-start;
-  gap: 0;                 /* no space between logo and title */
+  gap: 0;                 /* no visible gap between logo and text */
   padding: 32px 0;
 }
 
-/* Logo (left) */
+/* Logo */
 .hero-with-logo .hero-with-logo-logo {
   flex: 0 0 auto;
   display: flex;
@@ -33,8 +29,7 @@
   justify-content: center;
   padding: 12px 16px;
   margin: 0;
-  background-color: #ffffff;
-  border-radius: 4px 0 0 4px;
+  background-color: #fff;
 }
 
 .hero-with-logo .hero-with-logo-logo picture {
@@ -49,8 +44,13 @@
   object-fit: contain;
 }
 
-/* ── Title (right) – your updated typography ─────────────────────────────── */
+/* Title (right) – your typography */
 .hero-with-logo .hero-with-logo-title {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   font-family: var(--heading-font-family);
   font-weight: 900;
   font-size: 52px;
@@ -58,29 +58,25 @@
   text-transform: uppercase;
   letter-spacing: -0.01em;
 
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   padding: 12px 20px;
-  margin: 0;              /* no margin so it touches the logo */
+  margin: 0;
   background-color: transparent;
-  white-space: normal;    /* ensure words can wrap / break onto lines */
+  white-space: normal;
 }
 
-/* Headline elements inside title */
+/* Ensure heading inside inherits typography */
 .hero-with-logo .hero-with-logo-title h1,
 .hero-with-logo .hero-with-logo-title h2,
 .hero-with-logo .hero-with-logo-title h3 {
   margin: 0;
   padding: 0;
-  font: inherit;          /* use the font settings from .hero-with-logo-title */
-  color: inherit;         /* colors handled by spans */
+  font: inherit;
+  color: inherit;
 }
 
 /* Each word on its own line */
 .hero-with-logo .hero-with-logo-title .hero-with-logo-word {
-  display: block;                             /* key: one word per line */
+  display: block;                             /* this forces one word per line */
   color: var(--text-color-light, #a0b4c8);    /* default color for words */
 }
 
@@ -89,13 +85,13 @@
   color: #ffffff;
 }
 
-/* Optional subtitle / body under the headline */
+/* Optional subtitle */
 .hero-with-logo .hero-with-logo-title p {
   margin: 8px 0 0;
   font-size: var(--body-font-size-m, 1rem);
   color: var(--text-color-secondary, #6b8399);
   line-height: 1.6;
-  text-transform: none;    /* keep subtitle normal case */
+  text-transform: none;
 }
 
 /* Responsive */
@@ -103,15 +99,7 @@
   .hero-with-logo .hero-with-logo-inner {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0;
     padding: 24px 0;
-  }
-
-  .hero-with-logo .hero-with-logo-logo {
-    width: 100%;
-    justify-content: flex-start;
-    padding: 10px 14px;
-    border-radius: 4px 4px 0 0;
   }
 
   .hero-with-logo .hero-with-logo-logo img {
@@ -121,7 +109,7 @@
   .hero-with-logo .hero-with-logo-title {
     width: 100%;
     padding: 12px 14px;
-    font-size: var(--heading-font-size-l, 1.75rem); /* scale down on mobile */
+    font-size: var(--heading-font-size-l, 1.75rem);
     line-height: 1.05;
   }
 }
