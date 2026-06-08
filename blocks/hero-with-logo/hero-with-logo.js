@@ -1,37 +1,40 @@
 export default function decorate(block) {
   document.body.classList.add('dark-page');
- 
-  // One row, two cells: cell 0 = image, cell 1 = headline
+
+  // One row, two cells: cell 0 = headline (left), cell 1 = image (right)
   const firstRow = block.children[0];
   const cells = firstRow ? [...firstRow.children] : [];
- 
+
   const inner = document.createElement('div');
   inner.className = 'hero-with-logo-inner';
- 
-  // --- Cell 0: image (left) ---
-  const imageWrapper = document.createElement('div');
-  imageWrapper.className = 'hero-with-logo-image';
-  const picture = cells[0]?.querySelector('picture');
-  if (picture) imageWrapper.appendChild(picture);
-  inner.appendChild(imageWrapper);
- 
-  // --- Cell 1: headline (right) ---
+
+  // --- Cell 0: headline (left) ---
   const titleWrapper = document.createElement('div');
   titleWrapper.className = 'hero-with-logo-title';
- 
-  const rawText = cells[1]?.textContent.trim() ?? '';
+
+  const rawText = cells[0]?.textContent.trim() ?? '';
   const words = rawText.split(/\s+/).filter(Boolean);
- 
+
   const h1 = document.createElement('h1');
-  words.forEach((word) => {
+  words.forEach((word, index) => {
     const span = document.createElement('span');
     span.className = 'hero-with-logo-word';
+    // First word white, last word red
+    if (index === 0) span.classList.add('hero-with-logo-word--first');
+    if (index === words.length - 1) span.classList.add('hero-with-logo-word--last');
     span.textContent = word;
     h1.appendChild(span);
   });
- 
+
   titleWrapper.appendChild(h1);
   inner.appendChild(titleWrapper);
- 
+
+  // --- Cell 1: image (right) ---
+  const imageWrapper = document.createElement('div');
+  imageWrapper.className = 'hero-with-logo-image';
+  const picture = cells[1]?.querySelector('picture');
+  if (picture) imageWrapper.appendChild(picture);
+  inner.appendChild(imageWrapper);
+
   block.replaceChildren(inner);
 }
