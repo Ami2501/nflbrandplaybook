@@ -27,7 +27,7 @@
 .brand-hero h1 em {
   display: block;
   font-style: normal;
-  color: #5a9fd4;
+  color: var(--nfl-impact-blue);
 }
 
 .brand-hero p {
