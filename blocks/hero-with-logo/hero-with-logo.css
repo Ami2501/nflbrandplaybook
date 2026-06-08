@@ -62,7 +62,7 @@
 /* Each word on its own line */
 .hero-with-logo .hero-with-logo-title .hero-with-logo-word {
   display: block !important;
-  color: var(--color-heading, #001D3C);
+  color: var(--nfl-impact-blue, #0074EE);
 }
 
 /* First word — white */
