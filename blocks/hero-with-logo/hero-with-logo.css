@@ -17,7 +17,7 @@
 
 .hero-with-logo {
   max-width: var(--page-width, 1200px);
-  margin: 30 auto;
+  margin: 0 auto;
   padding: 0 var(--spacing-m, 24px);
 }
 
@@ -27,7 +27,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  gap: 0;
+  gap: 48px;
   padding: 32px 0;
 }
 
