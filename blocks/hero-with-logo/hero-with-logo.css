@@ -72,7 +72,7 @@
 
 /* Last word — red */
 .hero-with-logo .hero-with-logo-title .hero-with-logo-word--last {
-  color: #e00000;
+  color: var(--nfl-shield-red, #d50A0A);
 }
 
 /* ── RIGHT: Image ────────────────────────── */
