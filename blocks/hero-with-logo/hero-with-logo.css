@@ -48,9 +48,8 @@
 }
  
 .hero-with-logo .hero-with-logo-image img {
-  display: block;
-  width: 100%;
-  max-width: 480px;   /* adjust to suit your design */
+ display: block;
+  width: 50%;
   height: auto;
   object-fit: cover;
 }
@@ -100,6 +99,7 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 24px 0;
+      width: 100%;
   }
  
   .hero-with-logo .hero-with-logo-image {
