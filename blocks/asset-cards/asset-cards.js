@@ -1,14 +1,12 @@
 export default function decorate(block) {
   const ul = document.createElement('ul');
-
   [...block.children].forEach((row) => {
     const li = document.createElement('li');
     const cols = [...row.children];
 
-    // First col = optional image + title, second col = link text / description
+    // First col = optional image + title, second col = link
     const picture = cols[0]?.querySelector('picture');
     const title = cols[0]?.textContent.trim() || '';
-    const linkOrDesc = cols[1]?.textContent.trim() || '';
     const link = cols[1]?.querySelector('a');
 
     const card = document.createElement('a');
@@ -36,16 +34,11 @@ export default function decorate(block) {
     h3.textContent = title;
     textWrap.append(h3);
 
-    if (linkOrDesc) {
-      const p = document.createElement('p');
-      p.textContent = link ? link.textContent.trim() : linkOrDesc;
-      textWrap.append(p);
-    }
+    // subtitle <p> removed
 
     card.append(textWrap);
     li.append(card);
     ul.append(li);
   });
-
   block.replaceChildren(ul);
 }
