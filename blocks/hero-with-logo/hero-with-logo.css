@@ -115,10 +115,10 @@
   }
 
   .hero-with-logo .hero-with-logo-image {
-    width: 100%;
+    width: 50%;
   }
 
   .hero-with-logo .hero-with-logo-image img {
-    width: 100%;
+    width: 50%;
   }
 }
