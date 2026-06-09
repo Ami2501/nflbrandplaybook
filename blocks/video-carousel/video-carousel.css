@@ -1,4 +1,35 @@
-/* YouTube wrapper */
+.video-carousel {
+  position: relative;
+  width: 100%;
+  background: #000;
+  user-select: none;
+}
+
+.video-carousel-track {
+  position: relative;
+  width: 100%;
+}
+
+/* KEY FIX — use visibility not display:none */
+.video-carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.video-carousel-slide[aria-hidden='false'] {
+  position: relative;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* YouTube */
 .video-carousel-youtube-wrapper,
 .video-carousel-mp4-wrapper {
   position: relative;
@@ -12,30 +43,7 @@
   display: block;
 }
 
-/* Existing styles from before remain unchanged */
-.video-carousel {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  background: #000;
-  user-select: none;
-}
-
-.video-carousel-track {
-  position: relative;
-  width: 100%;
-}
-
-.video-carousel-slide {
-  display: none;
-  position: relative;
-  width: 100%;
-}
-
-.video-carousel-slide.active {
-  display: block;
-}
-
+/* MP4 */
 .video-carousel-player {
   width: 100%;
   height: auto;
@@ -44,6 +52,7 @@
   display: block;
 }
 
+/* Prev / Next */
 .video-carousel-prev,
 .video-carousel-next {
   position: absolute;
@@ -72,6 +81,7 @@
   background: rgba(0, 0, 0, 0.85);
 }
 
+/* Mute button */
 .video-carousel-controls {
   position: absolute;
   bottom: 48px;
@@ -97,6 +107,7 @@
   background: rgba(0, 0, 0, 0.85);
 }
 
+/* Caption */
 .video-carousel-caption {
   position: absolute;
   bottom: 48px;
@@ -109,12 +120,15 @@
   max-width: 60%;
 }
 
+/* Dots */
 .video-carousel-dots {
   display: flex;
   justify-content: center;
   gap: 8px;
   padding: 12px 0;
   background: #000;
+  position: relative;
+  z-index: 2;
 }
 
 .video-carousel-dot {
