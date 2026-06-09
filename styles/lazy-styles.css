@@ -11,7 +11,7 @@ main > .section > div > h2::after {
 }
 
 body.dark-page main > .section > div > h2::after {
-  background-color: var(--nfl-gold);
+  background-color: var(--nfl-impact-blue);
 }
 
 /* NFL field-line section divider (opt-in via section metadata) */
