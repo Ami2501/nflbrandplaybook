@@ -37,7 +37,7 @@ export default function decorate(block) {
   });
 
   // Force first slide visible
-  carousel.children[0].setAttribute('aria-hidden', 'false');
+  //carousel.children[0].setAttribute('aria-hidden', 'false');
 
   // Prev button
   const prev = document.createElement('button');
@@ -173,7 +173,7 @@ export default function decorate(block) {
   block.append(carousel);
   block.append(next);
   block.append(dots);
-
+ carousel.children[0].setAttribute('aria-hidden', 'false');
   observer.observe(block);
 }
 
