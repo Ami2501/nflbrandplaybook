@@ -15,11 +15,11 @@ export default function decorate(block) {
   const carousel = document.createElement('div');
   carousel.classList.add('video-carousel-track');
 
-  slides.forEach((slide, i) => {
-    const item = document.createElement('div');
-    item.classList.add('video-carousel-slide');
-    // Use visibility instead of display:none so iframes load
-    item.setAttribute('aria-hidden', i !== 0 ? 'true' : 'false');
+slides.forEach((slide, i) => {
+  const item = document.createElement('div');
+  item.classList.add('video-carousel-slide');
+  item.setAttribute('aria-hidden', i !== 0 ? 'true' : 'false');
+
 
     if (slide.type === 'youtube') {
       item.append(buildYouTubeSlide(slide));
