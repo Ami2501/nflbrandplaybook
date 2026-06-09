@@ -228,7 +228,7 @@ function buildYouTubeSlide(slide) {
   const iframe = document.createElement('iframe');
   iframe.setAttribute(
     'src',
-    `[youtube.com](https://www.youtube.com/embed/${id}?enablejsapi=1&mute=1&autoplay=0&rel=0&modestbranding=1&playsinline=1)`,
+    `(https://www.youtube.com/embed/${id}?enablejsapi=1&mute=1&autoplay=0&rel=0&modestbranding=1&playsinline=1)`,
   );
   iframe.setAttribute('allow', 'autoplay; encrypted-media; fullscreen');
   iframe.setAttribute('allowfullscreen', '');
@@ -253,7 +253,7 @@ function buildYouTubeSlide(slide) {
           func: isMuted ? 'mute' : 'unMute',
           args: [],
         }),
-        '[youtube.com](https://www.youtube.com)',
+        'https://www.youtube.com',
       );
     } catch (e) {
       // iframe not ready
