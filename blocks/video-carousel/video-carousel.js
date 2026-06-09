@@ -186,6 +186,13 @@ function getVideoType(url) {
 }
 
 function getYouTubeId(url) {
+  // Fix DA Live rewritten URLs — extract real URL from markdown link format
+  // e.g. [your-site.aem.page](https://your-site.aem.page/)[youtube.com](https://www.youtube.com/watch?v=abc)
+  const daLiveMatch = url.match(/\(https?:\/\/(?:www\.)?youtube\.com[^)]+\)/);
+  if (daLiveMatch) {
+    url = daLiveMatch[0].slice(1, -1); // strip surrounding ( )
+  }
+
   try {
     const u = new URL(url);
     if (u.hostname === 'youtu.be') {
@@ -200,6 +207,7 @@ function getYouTubeId(url) {
   const match = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
   return match ? match[1] : '';
 }
+
 
 function buildYouTubeSlide(slide) {
   const id = getYouTubeId(slide.src);
