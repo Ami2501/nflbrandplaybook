@@ -15,7 +15,7 @@ export default function decorate(block) {
   const carousel = document.createElement('div');
   carousel.classList.add('video-carousel-track');
 
-  slides.forEach((slide, i) => {
+  slides.forEach((slide) => {
     const item = document.createElement('div');
     item.classList.add('video-carousel-slide');
     item.setAttribute('aria-hidden', 'true');
@@ -35,9 +35,6 @@ export default function decorate(block) {
 
     carousel.append(item);
   });
-
-  // Force first slide visible
-  //carousel.children[0].setAttribute('aria-hidden', 'false');
 
   // Prev button
   const prev = document.createElement('button');
@@ -129,13 +126,9 @@ export default function decorate(block) {
   function goTo(index) {
     stopSlide(current);
     carousel.children[current].setAttribute('aria-hidden', 'true');
-
     current = (index + slides.length) % slides.length;
-
     carousel.children[current].setAttribute('aria-hidden', 'false');
     updateDots(current);
-
-    // Delay to let slide become visible before playing
     setTimeout(() => startSlide(current), 150);
   }
 
@@ -158,7 +151,7 @@ export default function decorate(block) {
     if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
   }, { passive: true });
 
-  // IntersectionObserver — play when in viewport, pause when out
+  // IntersectionObserver — play when in viewport
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -173,28 +166,38 @@ export default function decorate(block) {
   block.append(carousel);
   block.append(next);
   block.append(dots);
- carousel.children[0].setAttribute('aria-hidden', 'false');
+
+  // Force first slide visible AFTER carousel is in the DOM
+  carousel.children[0].setAttribute('aria-hidden', 'false');
+
   observer.observe(block);
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────
+// ─── URL Helpers ──────────────────────────────────────────────────────────
+
+/**
+ * DA Live rewrites external links as:
+ * [your-site.aem.page](https://your-site.aem.page/)[display](https://real-url)
+ * This extracts the real URL from inside the parentheses.
+ */
+function cleanUrl(url) {
+  if (!url) return url;
+  const match = url.match(/\((https?:\/\/[^)]+)\)/);
+  if (match) return match[1];
+  return url;
+}
 
 function getVideoType(url) {
   if (!url) return 'mp4';
-  if (url.includes('youtube.com') || url.includes('youtu.be')) return 'youtube';
+  const cleaned = cleanUrl(url);
+  if (cleaned.includes('youtube.com') || cleaned.includes('youtu.be')) return 'youtube';
   return 'mp4';
 }
 
 function getYouTubeId(url) {
-  // Fix DA Live rewritten URLs — extract real URL from markdown link format
-  // e.g. [your-site.aem.page](https://your-site.aem.page/)[youtube.com](https://www.youtube.com/watch?v=abc)
-  const daLiveMatch = url.match(/\(https?:\/\/(?:www\.)?youtube\.com[^)]+\)/);
-  if (daLiveMatch) {
-    url = daLiveMatch[0].slice(1, -1); // strip surrounding ( )
-  }
-
+  const cleaned = cleanUrl(url);
   try {
-    const u = new URL(url);
+    const u = new URL(cleaned);
     if (u.hostname === 'youtu.be') {
       return u.pathname.slice(1).split('?')[0];
     }
@@ -204,18 +207,21 @@ function getYouTubeId(url) {
   } catch (e) {
     // fallback regex
   }
-  const match = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  const match = cleaned.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
   return match ? match[1] : '';
 }
 
+// ─── Slide Builders ───────────────────────────────────────────────────────
 
 function buildYouTubeSlide(slide) {
-  const id = getYouTubeId(slide.src);
+  const cleanedSrc = cleanUrl(slide.src);
+  const id = getYouTubeId(cleanedSrc);
+
   const wrapper = document.createElement('div');
   wrapper.classList.add('video-carousel-youtube-wrapper');
 
   if (!id) {
-    wrapper.textContent = `Invalid YouTube URL: ${slide.src}`;
+    wrapper.textContent = `Could not extract YouTube ID from: ${slide.src}`;
     return wrapper;
   }
 
@@ -274,7 +280,7 @@ function buildMp4Slide(slide) {
   video.classList.add('video-carousel-player');
 
   const source = document.createElement('source');
-  source.setAttribute('src', slide.src);
+  source.setAttribute('src', cleanUrl(slide.src));
   source.setAttribute('type', `video/${slide.src.split('.').pop().split('?')[0]}`);
   video.append(source);
 
@@ -298,22 +304,21 @@ function buildMp4Slide(slide) {
   return wrapper;
 }
 
-// ─── Icons ─────────────────────────────────────────────────────────────────
+// ─── Icons ────────────────────────────────────────────────────────────────
 
 function mutedIcon() {
   return `<svg viewBox="0 0 24 24" width="20" height="20" fill="white">
-    <path d="M16.5 12A4.5 4.5 0 0 0 14 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0
-      .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86
+    <path d="M16.5 12A4.5 4.5 0 0 0 14 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5
+      0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86
       5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25
-      1.18v2.06A8.99 8.99 0 0 0 17.73 19L19 20.27 20.27 19 5.27 2 4.27 3zM12 4L9.91 6.09 12
-      8.18V4z"/>
+      1.18v2.06A8.99 8.99 0 0 0 17.73 19L19 20.27 20.27 19 5.27 2 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
   </svg>`;
 }
 
 function unmutedIcon() {
   return `<svg viewBox="0 0 24 24" width="20" height="20" fill="white">
     <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73
-      2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91
-      7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+      2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5
+      6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
   </svg>`;
 }
