@@ -8,25 +8,19 @@
 .video-carousel-track {
   position: relative;
   width: 100%;
+  min-height: 200px;
 }
 
-/* KEY FIX — use visibility not display:none */
+/* Hidden slides */
 .video-carousel-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
+  display: none;
+  position: relative;
   width: 100%;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
 }
 
+/* Active slide — shown via aria-hidden=false */
 .video-carousel-slide[aria-hidden='false'] {
-  position: relative;
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
+  display: block;
 }
 
 /* YouTube */
@@ -110,7 +104,7 @@
 /* Caption */
 .video-carousel-caption {
   position: absolute;
-  bottom: 48px;
+  bottom: 16px;
   left: 16px;
   z-index: 3;
   color: #fff;
