@@ -95,7 +95,7 @@ main .section.guidelines-dark .columns h3 {
 }
 
 main .section.guidelines-dark .columns > div > div:first-child h3 {
-  color: var(--nfl-gold);
+  color: var(--nfl-impact-blue);
 }
 
 main .section.guidelines-dark .columns > div > div:last-child h3 {
