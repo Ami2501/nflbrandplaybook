@@ -71,7 +71,7 @@ export default function decorate(block) {
     try {
       iframe.contentWindow.postMessage(
         JSON.stringify({ event: 'command', func, args: [] }),
-        '[youtube.com](https://www.youtube.com)',
+        '(https://www.youtube.com)',
       );
     } catch (e) {
       // iframe not ready
