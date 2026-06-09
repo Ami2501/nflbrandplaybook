@@ -309,7 +309,7 @@ body.dark-page h6 {
 }
 
 body.dark-page a:any-link {
-  color: var(--nfl-blue-3);
+  color: var(--nfl-impact-blue);
 }
 
 body.dark-page a:hover {
