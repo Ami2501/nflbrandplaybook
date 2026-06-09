@@ -1,64 +1,31 @@
 export default function decorate(block) {
-  // Collect all video URLs from block rows
   const slides = [...block.children].map((row) => {
     const link = row.querySelector('a');
     const caption = row.querySelector('p:not(:has(a))');
     return {
       src: link?.href || '',
       caption: caption?.textContent?.trim() || '',
+      type: getVideoType(link?.href || ''),
     };
   });
 
   block.textContent = '';
-
   if (!slides.length) return;
 
-  // Build carousel wrapper
   const carousel = document.createElement('div');
   carousel.classList.add('video-carousel-track');
 
-  // Build slides
   slides.forEach((slide, i) => {
     const item = document.createElement('div');
     item.classList.add('video-carousel-slide');
     if (i === 0) item.classList.add('active');
 
-    const video = document.createElement('video');
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
-    video.setAttribute('loop', '');
-    video.setAttribute('preload', 'none');
-    video.classList.add('video-carousel-player');
+    if (slide.type === 'youtube') {
+      item.append(buildYouTubeSlide(slide));
+    } else {
+      item.append(buildMp4Slide(slide));
+    }
 
-    const source = document.createElement('source');
-    source.setAttribute('src', slide.src);
-    source.setAttribute('type', `video/${slide.src.split('.').pop().split('?')[0]}`);
-    video.append(source);
-
-    // Unmute button
-    const controls = document.createElement('div');
-    controls.classList.add('video-carousel-controls');
-
-    const muteBtn = document.createElement('button');
-    muteBtn.classList.add('video-carousel-mute-btn');
-    muteBtn.setAttribute('aria-label', 'Unmute video');
-    muteBtn.innerHTML = mutedIcon();
-
-    muteBtn.addEventListener('click', () => {
-      if (video.muted) {
-        video.muted = false;
-        muteBtn.innerHTML = unmutedIcon();
-        muteBtn.setAttribute('aria-label', 'Mute video');
-      } else {
-        video.muted = true;
-        muteBtn.innerHTML = mutedIcon();
-        muteBtn.setAttribute('aria-label', 'Unmute video');
-      }
-    });
-
-    controls.append(muteBtn);
-
-    // Caption
     if (slide.caption) {
       const cap = document.createElement('div');
       cap.classList.add('video-carousel-caption');
@@ -66,12 +33,10 @@ export default function decorate(block) {
       item.append(cap);
     }
 
-    item.append(video);
-    item.append(controls);
     carousel.append(item);
   });
 
-  // Prev / Next buttons
+  // Prev / Next
   const prev = document.createElement('button');
   prev.classList.add('video-carousel-prev');
   prev.setAttribute('aria-label', 'Previous video');
@@ -94,37 +59,68 @@ export default function decorate(block) {
     dots.append(dot);
   });
 
-  // State
   let current = 0;
 
-  function getVideo(index) {
-    return carousel.children[index]?.querySelector('video');
+  function goTo(index) {
+    stopSlide(current);
+    carousel.children[current]?.classList.remove('active');
+    current = (index + slides.length) % slides.length;
+    carousel.children[current]?.classList.add('active');
+    updateDots(current);
+    startSlide(current);
   }
 
-  function getMuteBtn(index) {
-    return carousel.children[index]?.querySelector('.video-carousel-mute-btn');
-  }
+  function startSlide(index) {
+    const slide = carousel.children[index];
+    if (!slide) return;
+    const type = slides[index].type;
 
-  function playSlide(index) {
-    const video = getVideo(index);
-    if (!video) return;
-    video.muted = true;
-    const btn = getMuteBtn(index);
-    if (btn) {
-      btn.innerHTML = mutedIcon();
-      btn.setAttribute('aria-label', 'Unmute video');
+    if (type === 'youtube') {
+      // Post message to YouTube iframe to play
+      const iframe = slide.querySelector('iframe');
+      if (iframe) {
+        iframe.contentWindow.postMessage(
+          JSON.stringify({ event: 'command', func: 'playVideo', args: [] }),
+          '*'
+        );
+      }
+    } else {
+      const video = slide.querySelector('video');
+      if (video) {
+        video.muted = true;
+        const btn = slide.querySelector('.video-carousel-mute-btn');
+        if (btn) {
+          btn.innerHTML = mutedIcon();
+          btn.setAttribute('aria-label', 'Unmute video');
+        }
+        video.play().catch(() => {
+          video.muted = true;
+          video.play();
+        });
+      }
     }
-    video.play().catch(() => {
-      video.muted = true;
-      video.play();
-    });
   }
 
-  function pauseSlide(index) {
-    const video = getVideo(index);
-    if (!video) return;
-    video.pause();
-    video.currentTime = 0;
+  function stopSlide(index) {
+    const slide = carousel.children[index];
+    if (!slide) return;
+    const type = slides[index].type;
+
+    if (type === 'youtube') {
+      const iframe = slide.querySelector('iframe');
+      if (iframe) {
+        iframe.contentWindow.postMessage(
+          JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }),
+          '*'
+        );
+      }
+    } else {
+      const video = slide.querySelector('video');
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    }
   }
 
   function updateDots(index) {
@@ -133,47 +129,35 @@ export default function decorate(block) {
     });
   }
 
-  function goTo(index) {
-    pauseSlide(current);
-    carousel.children[current]?.classList.remove('active');
-
-    current = (index + slides.length) % slides.length;
-
-    carousel.children[current]?.classList.add('active');
-    updateDots(current);
-    playSlide(current);
-  }
-
   prev.addEventListener('click', () => goTo(current - 1));
   next.addEventListener('click', () => goTo(current + 1));
 
-  // Intersection Observer — play when in viewport, pause when out
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        playSlide(current);
-      } else {
-        pauseSlide(current);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  // Keyboard navigation
+  // Keyboard
   block.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') goTo(current - 1);
     if (e.key === 'ArrowRight') goTo(current + 1);
   });
 
-  // Touch swipe support
+  // Touch swipe
   let touchStartX = 0;
   block.addEventListener('touchstart', (e) => {
     touchStartX = e.touches[0].clientX;
   }, { passive: true });
-
   block.addEventListener('touchend', (e) => {
     const diff = touchStartX - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
   }, { passive: true });
+
+  // IntersectionObserver — play when in view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        startSlide(current);
+      } else {
+        stopSlide(current);
+      }
+    });
+  }, { threshold: 0.5 });
 
   block.append(prev);
   block.append(carousel);
@@ -181,6 +165,104 @@ export default function decorate(block) {
   block.append(dots);
 
   observer.observe(block);
+}
+
+// ─── Helpers ────────────────────────────────────────────────────────────────
+
+function getVideoType(url) {
+  if (!url) return 'mp4';
+  if (url.includes('youtube.com') || url.includes('youtu.be')) return 'youtube';
+  return 'mp4';
+}
+
+function getYouTubeId(url) {
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes('youtu.be')) return u.pathname.slice(1);
+    return u.searchParams.get('v') || '';
+  } catch {
+    return '';
+  }
+}
+
+function buildYouTubeSlide(slide) {
+  const id = getYouTubeId(slide.src);
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('video-carousel-youtube-wrapper');
+
+  // enablejsapi=1 allows postMessage control
+  // mute=1 starts muted
+  // autoplay=0 — we control play via postMessage
+  const iframe = document.createElement('iframe');
+  iframe.setAttribute('src',
+    `[youtube.com](https://www.youtube.com/embed/${id}?enablejsapi=1&mute=1&autoplay=0&rel=0&modestbranding=1)`
+  );
+  iframe.setAttribute('allow', 'autoplay; encrypted-media');
+  iframe.setAttribute('allowfullscreen', '');
+  iframe.setAttribute('title', slide.caption || 'Video');
+  iframe.classList.add('video-carousel-youtube');
+
+  // Mute toggle for YouTube
+  const controls = document.createElement('div');
+  controls.classList.add('video-carousel-controls');
+
+  const muteBtn = document.createElement('button');
+  muteBtn.classList.add('video-carousel-mute-btn');
+  muteBtn.setAttribute('aria-label', 'Unmute video');
+  muteBtn.innerHTML = mutedIcon();
+
+  let isMuted = true;
+  muteBtn.addEventListener('click', () => {
+    isMuted = !isMuted;
+    const func = isMuted ? 'mute' : 'unMute';
+    iframe.contentWindow.postMessage(
+      JSON.stringify({ event: 'command', func, args: [] }),
+      '*'
+    );
+    muteBtn.innerHTML = isMuted ? mutedIcon() : unmutedIcon();
+    muteBtn.setAttribute('aria-label', isMuted ? 'Unmute video' : 'Mute video');
+  });
+
+  controls.append(muteBtn);
+  wrapper.append(iframe);
+  wrapper.append(controls);
+  return wrapper;
+}
+
+function buildMp4Slide(slide) {
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('video-carousel-mp4-wrapper');
+
+  const video = document.createElement('video');
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('loop', '');
+  video.setAttribute('preload', 'none');
+  video.classList.add('video-carousel-player');
+
+  const source = document.createElement('source');
+  source.setAttribute('src', slide.src);
+  source.setAttribute('type', `video/${slide.src.split('.').pop().split('?')[0]}`);
+  video.append(source);
+
+  const controls = document.createElement('div');
+  controls.classList.add('video-carousel-controls');
+
+  const muteBtn = document.createElement('button');
+  muteBtn.classList.add('video-carousel-mute-btn');
+  muteBtn.setAttribute('aria-label', 'Unmute video');
+  muteBtn.innerHTML = mutedIcon();
+
+  muteBtn.addEventListener('click', () => {
+    video.muted = !video.muted;
+    muteBtn.innerHTML = video.muted ? mutedIcon() : unmutedIcon();
+    muteBtn.setAttribute('aria-label', video.muted ? 'Unmute video' : 'Mute video');
+  });
+
+  controls.append(muteBtn);
+  wrapper.append(video);
+  wrapper.append(controls);
+  return wrapper;
 }
 
 function mutedIcon() {
@@ -194,4 +276,3 @@ function unmutedIcon() {
     <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
   </svg>`;
 }
-
