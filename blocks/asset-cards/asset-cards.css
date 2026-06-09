@@ -64,6 +64,7 @@
 .asset-cards .asset-card.has-image .asset-card-text {
   padding: 20px 16px;
 }
+
 .asset-cards .asset-card h2 {
   color: #fff;
   font-family: var(--heading-font-family);
@@ -72,6 +73,7 @@
   text-transform: uppercase;
   margin: 0;
 }
+
 .asset-cards .asset-card h3 {
   color: #fff;
   font-family: var(--heading-font-family);
@@ -79,7 +81,7 @@
   font-size: var(--heading-font-size-s);
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  margin: 0 0 8px;
+  margin: 0; /* ← was 0 0 8px, no subtitle below */
   line-height: 1.2;
 }
 
@@ -103,7 +105,7 @@
 
 /* Accent card variant */
 .asset-cards.accent .asset-card {
-  background: linear-gradient(135deg, #0074EE 0%, #004ba3 100%);
+  background:  #0074EE;
   border-color: var(--nfl-gold);
 }
 
