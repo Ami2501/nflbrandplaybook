@@ -136,4 +136,11 @@
   .photo-split.reverse .photo-split-layout {
     direction: ltr;
   }
+    
+}
+
+@media (width < 900px) {
+  .photo-split.reverse .photo-split-text {
+    text-align: left;
+  }
 }
