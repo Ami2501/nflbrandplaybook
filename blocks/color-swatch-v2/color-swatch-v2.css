@@ -1,1 +1,138 @@
+/* ============================================
+   COLOR SWATCH V2 — Block Styles
+   Horizontal layout: color block left, info right
+   .color-swatch-v2
+   └── .color-swatch-v2-grid
+       └── .color-swatch-v2-card
+           ├── .color-swatch-v2-swatch
+           └── .color-swatch-v2-info
+               ├── .color-swatch-v2-name
+               ├── .color-swatch-v2-desc
+               └── .color-swatch-v2-codes
+                   └── .color-swatch-v2-code (× N)
+   ============================================ */
+
+.color-swatch-v2-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Card: horizontal row */
+.color-swatch-v2-card {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 10%);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  min-height: 100px;
+}
+
+.color-swatch-v2-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 30%);
+  border-color: rgb(255 255 255 / 20%);
+}
+
+/* Left: color swatch block */
+.color-swatch-v2-swatch {
+  flex: 0 0 180px;
+  min-height: 100px;
+}
+
+/* Right: info panel */
+.color-swatch-v2-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 28px;
+  gap: 8px;
+}
+
+/* Name */
+.color-swatch-v2-name {
+  font-family: var(--heading-font-family);
+  font-size: 18px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Description */
+.color-swatch-v2-desc {
+  font-size: 13px;
+  color: rgb(255 255 255 / 50%);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Codes row */
+.color-swatch-v2-codes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.color-swatch-v2-code {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.color-swatch-v2-code .code-label {
+  font-family: var(--heading-font-family);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgb(255 255 255 / 35%);
+}
+
+.color-swatch-v2-code .code-val {
+  font-family: var(--body-font-family);
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(255 255 255 / 85%);
+  letter-spacing: 0.02em;
+}
+
+/* ── Responsive ──────────────────────────── */
+@media (max-width: 600px) {
+  .color-swatch-v2-card {
+    flex-direction: column;
+  }
+
+  .color-swatch-v2-swatch {
+    flex: 0 0 auto;
+    height: 80px;
+    width: 100%;
+  }
+
+  .color-swatch-v2-info {
+    padding: 16px;
+  }
+
+  .color-swatch-v2-codes {
+    gap: 12px;
+  }
+}
+
+@media (width >= 900px) {
+  .color-swatch-v2-swatch {
+    flex: 0 0 220px;
+  }
+
+  .color-swatch-v2-grid {
+    gap: 16px;
+  }
+}
 
