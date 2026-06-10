@@ -111,7 +111,7 @@
 
 .asset-cards.accent .asset-card:hover {
   background: linear-gradient(135deg, #01245a 0%, #011a45 100%);
-  border-color: var(--nfl-gold);
+  border-color: var(--nfl-impact-blue);
 }
 
 .asset-cards.accent .asset-card h3 {
