@@ -14,7 +14,8 @@ function isValidHex(str) {
 }
 
 export default function decorate(block) {
-  const hideCodes = block.classList.contains('hide-codes');
+  // da.live merges options into the block name class, so check with includes
+  const hideCodes = block.closest('[class*="hide-codes"]') !== null;
 
   const rows = [...block.children];
   const grid = document.createElement('div');
