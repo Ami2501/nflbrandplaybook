@@ -106,7 +106,7 @@
 /* Accent card variant */
 .asset-cards.accent .asset-card {
   background:  #0074EE;
-  border-color: var(--nfl-gold);
+  border-color: var(--nfl-impact-blue);
 }
 
 .asset-cards.accent .asset-card:hover {
