@@ -78,7 +78,7 @@
   color: #fff;
   font-family: var(--heading-font-family);
   font-weight: 700;
-  font-size: var(--heading-font-size-s);
+  font-size: var(--heading-font-size-xl);
   text-transform: uppercase;
   letter-spacing: 0.03em;
   margin: 0; /* ← was 0 0 8px, no subtitle below */
