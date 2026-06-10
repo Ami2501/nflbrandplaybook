@@ -348,7 +348,7 @@ body.dark-page .button.secondary:hover {
 /* Focus states for accessibility */
 a.button:focus-visible,
 button.button:focus-visible {
-  outline: 2px solid var(--nfl-gold);
+  outline: 2px solid var(--nfl-impact-blue);
   outline-offset: 3px;
 }
 
