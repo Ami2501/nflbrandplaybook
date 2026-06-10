@@ -9,8 +9,11 @@ function hexToRgb(hex) {
   return result.join(' / ');
 }
 
+function isValidHex(str) {
+  return /^#([0-9A-Fa-f]{3}){1,2}$/.test(str);
+}
+
 export default function decorate(block) {
-  // hide-codes option: add to block header in doc e.g. "color-swatch-v2 hide-codes"
   const hideCodes = block.classList.contains('hide-codes');
 
   const rows = [...block.children];
@@ -19,14 +22,20 @@ export default function decorate(block) {
 
   rows.forEach((row) => {
     const cols = [...row.children];
+
+    // Skip rows where column 2 is not a valid hex value
+    const potentialHex = cols[1]?.textContent.trim() || '';
+    if (!isValidHex(potentialHex)) return;
+
     const name = cols[0]?.textContent.trim() || '';
-    const hex = cols[1]?.textContent.trim() || '#000000';
+    const hex = potentialHex;
     const desc = cols[2]?.textContent.trim() || '';
     const pantone = cols[3]?.textContent.trim() || '';
 
     const card = document.createElement('div');
     card.className = 'color-swatch-v2-card';
 
+    // Color swatch block
     const swatch = document.createElement('div');
     swatch.className = 'color-swatch-v2-color';
     swatch.style.backgroundColor = hex;
@@ -42,6 +51,7 @@ export default function decorate(block) {
 
     card.append(swatch);
 
+    // Info panel
     const info = document.createElement('div');
     info.className = 'color-swatch-v2-info';
 
@@ -49,19 +59,19 @@ export default function decorate(block) {
     if (!hideCodes) {
       const hexEl = document.createElement('div');
       hexEl.className = 'color-swatch-v2-value';
-      hexEl.innerHTML = `<span class="label">HEX</span> <span class="val">${hex.toUpperCase()}</span>`;
+      hexEl.innerHTML = `<span class="label">HEX</span><span class="val">${hex.toUpperCase()}</span>`;
       info.append(hexEl);
 
       const rgbEl = document.createElement('div');
       rgbEl.className = 'color-swatch-v2-value';
-      rgbEl.innerHTML = `<span class="label">RGB</span> <span class="val">${hexToRgb(hex)}</span>`;
+      rgbEl.innerHTML = `<span class="label">RGB</span><span class="val">${hexToRgb(hex)}</span>`;
       info.append(rgbEl);
     }
 
     if (pantone) {
       const pantoneEl = document.createElement('div');
       pantoneEl.className = 'color-swatch-v2-value';
-      pantoneEl.innerHTML = `<span class="label">PANTONE</span> <span class="val">${pantone}</span>`;
+      pantoneEl.innerHTML = `<span class="label">PANTONE</span><span class="val">${pantone}</span>`;
       info.append(pantoneEl);
     }
 
@@ -72,7 +82,11 @@ export default function decorate(block) {
       info.append(descEl);
     }
 
-    card.append(info);
+    // Only append info if it has children
+    if (info.children.length > 0) {
+      card.append(info);
+    }
+
     grid.append(card);
   });
 
