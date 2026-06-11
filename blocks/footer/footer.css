@@ -41,7 +41,7 @@ footer .footer a:any-link {
 }
 
 footer .footer a:hover {
-  color: var(--nfl-gold);
+  color: var(--nfl-impact-blue);
   text-decoration: underline;
 }
 
