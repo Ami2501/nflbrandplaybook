@@ -176,14 +176,7 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
-   // ── Open all external links in a new tab ─────────────────────────────────
-  main.querySelectorAll('a[href]').forEach((a) => {
-    const isExternal = a.hostname && a.hostname !== window.location.hostname;
-    if (isExternal) {
-      a.setAttribute('target', '_blank');
-      a.setAttribute('rel', 'noopener noreferrer');
-    }
-  });
+  
 }
 
 /**
