@@ -72,15 +72,15 @@
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  white-space: nowrap;         /* single line on desktop */
+  white-space: nowrap;
   color: var(--nfl-impact-blue);
 }
 
-/* ── Tablet ≤ 768px — wrap text freely ──────────────────────────────────── */
-@media (max-width: 768px) {
+/* ── Tablet ≤ 1024px — covers iPad, iPad Pro, Surface etc ───────────────── */
+@media (max-width: 1024px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 20px 0;
-    align-items: flex-start;   /* logo pins to top when text wraps */
+    align-items: flex-start;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
@@ -97,9 +97,9 @@
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
     font-size: 7vw;
-    white-space: normal;       /* wrap onto next line freely */
-    word-break: normal;        /* break only at word boundaries */
-    overflow-wrap: break-word; /* break if a single word is too long */
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
     line-height: 1.1;
   }
 }
@@ -125,7 +125,7 @@
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
     font-size: 6vw;
-    white-space: normal;       /* wrap onto next line freely */
+    white-space: normal;
     word-break: normal;
     overflow-wrap: break-word;
     line-height: 1.1;
