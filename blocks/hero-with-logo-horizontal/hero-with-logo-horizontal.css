@@ -46,7 +46,7 @@
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
   display: block;
-  max-height: 140px;           /* updated from 56px */
+  max-height: min(140px, 18vw);           /* updated from 56px */
   width: auto;
   object-fit: contain;
 }
