@@ -21,15 +21,15 @@
   padding: 32px 0;
 }
 
-/* ── Logo (left) — smaller than hero-with-logo ───────────────────────────── */
+/* ── Logo (left) ─────────────────────────────────────────────────────────── */
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px;           /* reduced padding vs original */
+  padding: 8px 12px;
   margin: 0;
-  background-color: #ffffff;
+  background-color: transparent;
 }
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo picture {
@@ -39,7 +39,7 @@
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
   display: block;
-  max-height: 40px;            /* smaller than hero-with-logo (was 64px) */
+  max-height: 56px;
   width: auto;
   object-fit: contain;
 }
@@ -63,8 +63,8 @@
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  white-space: nowrap;         /* keep all words on a single line */
-  color: #0057b8;              /* blue — all words */
+  white-space: nowrap;
+  color: var(--nfl-impact-blue);
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────── */
@@ -82,7 +82,7 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 32px;
+    max-height: 44px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
@@ -92,7 +92,6 @@
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
     font-size: var(--heading-font-size-l, 1.75rem);
-    white-space: normal;       /* allow wrapping on small screens */
+    white-space: normal;
   }
 }
-
