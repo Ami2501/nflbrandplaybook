@@ -7,7 +7,7 @@
 
 /* ── Block container ─────────────────────────────────────────────────────── */
 .hero-with-logo-horizontal {
-  max-width: var(--section-max-width, 1200px);
+  max-width: var(--page-width, 1200px);
   width: 100%;
   margin: 0 auto;
   padding: 0 var(--spacing-m, 24px);
@@ -46,12 +46,12 @@
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
   display: block;
-  max-height: 140px;
+  max-height: 56px;
   width: auto;
   object-fit: contain;
 }
 
-/* ── Title (right) — all words on a single line in blue ──────────────────── */
+/* ── Title (right) ───────────────────────────────────────────────────────── */
 .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
   flex: 1 1 auto;
   display: flex;
@@ -60,7 +60,7 @@
   margin: 0;
   background-color: transparent;
   box-sizing: border-box;
-  min-width: 0;                /* allows flex child to shrink below content size */
+  min-width: 0;
 }
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
@@ -68,14 +68,14 @@
   padding: 0;
   font-family: var(--heading-font-family);
   font-weight: 900;
-  font-size: 76px;
+  font-size: 4vw;              /* smoothly scales with viewport width */
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  white-space: nowrap;
+  white-space: nowrap;         /* keep on one line */
   color: var(--nfl-impact-blue);
-  overflow: hidden;
-  text-overflow: ellipsis;     /* adds ... if text still overflows */
+  overflow: visible;           /* no clipping */
+  text-overflow: unset;        /* no ellipsis */
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────── */
@@ -102,8 +102,7 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
-    font-size: clamp(1.25rem, 6vw, 2rem);
-    white-space: normal;
-    text-overflow: clip;
+    font-size: 6vw;            /* slightly larger vw unit on narrow screens */
+    white-space: normal;       /* allow wrap on very small screens */
   }
 }
