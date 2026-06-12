@@ -2,13 +2,16 @@
 .hero-with-logo-horizontal-wrapper {
   width: 100%;
   background-color: var(--color-background, #0a1f3c);
+  box-sizing: border-box;
 }
 
 /* ── Block container ─────────────────────────────────────────────────────── */
 .hero-with-logo-horizontal {
   max-width: var(--page-width, 1200px);
+  width: 100%;
   margin: 0 auto;
   padding: 0 var(--spacing-m, 24px);
+  box-sizing: border-box;
 }
 
 /* ── Inner flex row: logo + title on one line, no gap ───────────────────── */
@@ -19,6 +22,9 @@
   justify-content: flex-start;
   gap: 0;
   padding: 32px 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* ── Logo (left) ─────────────────────────────────────────────────────────── */
@@ -30,6 +36,7 @@
   padding: 8px 12px;
   margin: 0;
   background-color: transparent;
+  box-sizing: border-box;
 }
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo picture {
@@ -39,7 +46,7 @@
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
   display: block;
-  max-height: 120px;
+  max-height: 56px;
   width: auto;
   object-fit: contain;
 }
@@ -52,19 +59,23 @@
   padding: 8px 20px;
   margin: 0;
   background-color: transparent;
+  box-sizing: border-box;
+  min-width: 0;                /* allows flex child to shrink below content size */
 }
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
   margin: 0;
   padding: 0;
-  font-family: var(--heading-main-font-family);
+  font-family: var(--heading-font-family);
   font-weight: 900;
-  font-size: 96px;
+  font-size: clamp(1.5rem, 4vw, 52px);
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
   white-space: nowrap;
   color: var(--nfl-impact-blue);
+  overflow: hidden;
+  text-overflow: ellipsis;     /* adds ... if text still overflows */
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────── */
@@ -91,7 +102,8 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
-    font-size: var(--heading-font-size-l, 1.75rem);
+    font-size: clamp(1.25rem, 6vw, 2rem);
     white-space: normal;
+    text-overflow: clip;
   }
 }
