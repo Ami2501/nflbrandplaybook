@@ -46,7 +46,7 @@
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
   display: block;
-  max-height: 56px;
+  max-height: 140px;
   width: auto;
   object-fit: contain;
 }
@@ -68,7 +68,7 @@
   padding: 0;
   font-family: var(--heading-font-family);
   font-weight: 900;
-  font-size: 4vw;              /* smoothly scales with viewport width */
+  font-size: 3vw;              /* smoothly scales with viewport width */
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
