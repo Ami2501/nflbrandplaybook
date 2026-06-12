@@ -4,6 +4,7 @@
   width: 100%;
   background: transparent;
   user-select: none;
+  color: inherit;              /* don't set any color at block level */
 }
 
 .video-carousel .video-carousel-track {
@@ -16,6 +17,7 @@
   display: none;
   position: relative;
   width: 100%;
+  color: inherit;              /* don't inherit from any rogue parent */
 }
 
 /* Active slide */
@@ -107,7 +109,7 @@
   background: rgba(0, 0, 0, 0.85);
 }
 
-/* Caption */
+/* Caption — white only on the caption itself, not the whole block */
 .video-carousel .video-carousel-caption {
   position: absolute;
   bottom: 16px;
@@ -118,6 +120,19 @@
   font-weight: 600;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
   max-width: 60%;
+}
+
+/* Explicitly reset all text elements inside the block to inherit page color */
+.video-carousel p,
+.video-carousel h1,
+.video-carousel h2,
+.video-carousel h3,
+.video-carousel h4,
+.video-carousel h5,
+.video-carousel h6,
+.video-carousel span,
+.video-carousel a {
+  color: inherit;
 }
 
 /* Dots */
@@ -142,7 +157,6 @@
   transition: background 0.2s, transform 0.2s;
 }
 
-/* Fully namespaced — won't bleed to other .active elements on the page */
 .video-carousel .video-carousel-dot.active {
   background: #fff;
   transform: scale(1.3);
