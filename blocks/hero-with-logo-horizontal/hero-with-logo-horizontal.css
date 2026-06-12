@@ -1,1 +1,98 @@
+/* ── Wrapper ─────────────────────────────────────────────────────────────── */
+.hero-with-logo-horizontal-wrapper {
+  width: 100%;
+  background-color: var(--color-background, #0a1f3c);
+}
+
+/* ── Block container ─────────────────────────────────────────────────────── */
+.hero-with-logo-horizontal {
+  max-width: var(--page-width, 1200px);
+  margin: 0 auto;
+  padding: 0 var(--spacing-m, 24px);
+}
+
+/* ── Inner flex row: logo + title on one line, no gap ───────────────────── */
+.hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  padding: 32px 0;
+}
+
+/* ── Logo (left) — smaller than hero-with-logo ───────────────────────────── */
+.hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;           /* reduced padding vs original */
+  margin: 0;
+  background-color: #ffffff;
+}
+
+.hero-with-logo-horizontal .hero-with-logo-horizontal-logo picture {
+  display: flex;
+  align-items: center;
+}
+
+.hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
+  display: block;
+  max-height: 40px;            /* smaller than hero-with-logo (was 64px) */
+  width: auto;
+  object-fit: contain;
+}
+
+/* ── Title (right) — all words on a single line in blue ──────────────────── */
+.hero-with-logo-horizontal .hero-with-logo-horizontal-title {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
+  margin: 0;
+  background-color: transparent;
+}
+
+.hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
+  margin: 0;
+  padding: 0;
+  font-family: var(--heading-font-family);
+  font-weight: 900;
+  font-size: 52px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  white-space: nowrap;         /* keep all words on a single line */
+  color: #0057b8;              /* blue — all words */
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 0;
+  }
+
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 8px 12px;
+  }
+
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
+    max-height: 32px;
+  }
+
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
+    width: 100%;
+    padding: 10px 12px;
+  }
+
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
+    font-size: var(--heading-font-size-l, 1.75rem);
+    white-space: normal;       /* allow wrapping on small screens */
+  }
+}
 
