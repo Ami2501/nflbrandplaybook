@@ -76,7 +76,7 @@
   color: var(--nfl-impact-blue);
 }
 
-/* ── Tablet ≤ 1024px — covers iPad, iPad Pro, Surface etc ───────────────── */
+/* ── Tablet ≤ 1024px ─────────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 20px 0;
@@ -84,11 +84,11 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
-    padding: 4px 8px;
+    padding: 6px 10px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 56px;
+    max-height: 80px;          /* bigger — was 56px */
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
@@ -112,11 +112,11 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
-    padding: 2px 6px;
+    padding: 4px 8px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 40px;
+    max-height: 56px;          /* bigger — was 40px */
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
