@@ -1,3 +1,4 @@
+/* ── Grid ────────────────────────────────────────────────────────────────── */
 .asset-cards > ul {
   list-style: none;
   margin: 0;
@@ -11,54 +12,48 @@
   display: flex;
 }
 
+/* ── Card base ───────────────────────────────────────────────────────────── */
 .asset-cards .asset-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 160px;
-  padding: 32px 16px;
-  background-color: var(--nfl-shield-blue);
-  border: 1px solid rgb(255 255 255 / 10%);
-  border-radius: 16px;
-  text-align: center;
   text-decoration: none;
-  transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: var(--color-background, #0a1f3c);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .asset-cards .asset-card:hover {
-  background-color: rgb(255 255 255 / 12%);
-  border-color: rgb(255 255 255 / 25%);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-/* Image preview cards */
-.asset-cards .asset-card.has-image {
-  padding: 0;
-  align-items: stretch;
-}
-
+/* ── Image ───────────────────────────────────────────────────────────────── */
 .asset-cards .asset-card-image {
+  width: 100%;
   overflow: hidden;
-  border-radius: 16px 16px 0 0;
-  max-height: 160px;
-}
-
-.asset-cards .asset-card-image picture {
-  display: block;
 }
 
 .asset-cards .asset-card-image img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
   display: block;
-  transition: transform var(--transition-smooth);
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
 .asset-cards .asset-card.has-image:hover .asset-card-image img {
   transform: scale(1.05);
+}
+
+/* ── Text ────────────────────────────────────────────────────────────────── */
+.asset-cards .asset-card-text {
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .asset-cards .asset-card.has-image .asset-card-text {
@@ -81,7 +76,7 @@
   font-size: var(--heading-font-size-xl);
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  margin: 0; /* ← was 0 0 8px, no subtitle below */
+  margin: 0;
   line-height: 1.2;
 }
 
@@ -92,43 +87,74 @@
   margin: 0;
 }
 
-/* Full-width variant for single-column cards */
+/* ── Full-width variant ──────────────────────────────────────────────────── */
 .asset-cards.full > ul {
   grid-template-columns: 1fr;
 }
 
-.asset-cards.full .asset-card {
-  max-width: 580px;
-  margin: 0 auto;
-  min-height: 140px;
-}
-
-/* Accent card variant */
-.asset-cards.accent .asset-card {
-  background:  var(--nfl-shield-blue);
-  border-color: var(--nfl-impact-blue);
-}
-
-.asset-cards.accent .asset-card:hover {
-  background: linear-gradient(135deg, #01245a 0%, #011a45 100%);
-  border-color: var(--nfl-impact-blue);
-}
-
-.asset-cards.accent .asset-card h3 {
-  color: var(--nfl-impact-blue);
-}
-
-.asset-cards.accent .asset-card p {
-  color: #fff;
-}
-
-@media (width >= 900px) {
+/* ── Tablet ≤ 1024px — 2 columns still fine ─────────────────────────────── */
+@media (max-width: 1024px) {
   .asset-cards > ul {
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .asset-cards .asset-card h3 {
+    font-size: var(--heading-font-size-l, 1.5rem);
+  }
+}
+
+/* ── Mobile ≤ 767px — single column ─────────────────────────────────────── */
+@media (max-width: 767px) {
+  .asset-cards > ul {
+    grid-template-columns: 1fr;  /* stack to single column */
+    gap: 12px;
   }
 
   .asset-cards .asset-card {
-    min-height: 180px;
-    padding: 40px 24px;
+    flex-direction: row;         /* image left, text right on mobile */
+    align-items: stretch;
+  }
+
+  .asset-cards .asset-card-image {
+    width: 120px;
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+
+  .asset-cards .asset-card-image img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .asset-cards .asset-card-text {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .asset-cards .asset-card h3 {
+    font-size: var(--heading-font-size-m, 1.1rem);
+  }
+}
+
+/* ── Small mobile ≤ 480px ────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .asset-cards .asset-card {
+    flex-direction: column;      /* stack image above text on tiny screens */
+  }
+
+  .asset-cards .asset-card-image {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .asset-cards .asset-card-image img {
+    height: auto;
+  }
+
+  .asset-cards .asset-card h3 {
+    font-size: var(--heading-font-size-s, 1rem);
   }
 }
