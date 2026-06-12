@@ -10,7 +10,7 @@ import {
   loadSection,
   loadSections,
   loadCSS,
-} from './aem.js';
+} from './aem.js'; 
 
 /**
  * Builds hero block and prepends to main in a new section.
