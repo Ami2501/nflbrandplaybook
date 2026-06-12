@@ -2,7 +2,7 @@
 .video-carousel {
   position: relative;
   width: 100%;
-  background: #000;
+  background: transparent;     /* was #000 */
   user-select: none;
 }
 
@@ -37,14 +37,14 @@
   display: block;
 }
 
-/* MP4 — key fix: contain instead of cover, no max-height cap */
+/* MP4 — no cropping, no black bars */
 .video-carousel-player {
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 9;    /* enforces correct ratio — no cropping */
-  object-fit: contain;      /* was cover — was cropping the video */
+  aspect-ratio: 16 / 9;
+  object-fit: fill;            /* fills container exactly — no black bars */
   display: block;
-  background: #000;         /* black bars if aspect ratio differs */
+  background: transparent;     /* was #000 */
 }
 
 /* Prev / Next */
@@ -126,7 +126,7 @@
   justify-content: center;
   gap: 8px;
   padding: 12px 0;
-  background: #000;
+  background: transparent;     /* was #000 */
   position: relative;
   z-index: 2;
 }
@@ -156,6 +156,6 @@
   }
 
   .video-carousel-player {
-    aspect-ratio: 16 / 9;  /* maintain ratio on mobile too */
+    aspect-ratio: 16 / 9;
   }
 }
