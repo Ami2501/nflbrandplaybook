@@ -46,7 +46,7 @@
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
   display: block;
-  max-height: min(140px, 18vw);
+  max-height: 140px;           /* fixed desktop size */
   width: auto;
   object-fit: contain;
 }
@@ -68,7 +68,7 @@
   padding: 0;
   font-family: var(--heading-font-family);
   font-weight: 900;
-  font-size: clamp(1rem, 5.5vw, 52px);
+  font-size: 96px;             /* fixed — fits within 1200px after logo */
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
@@ -78,7 +78,7 @@
   text-overflow: unset;
 }
 
-/* ── Responsive — tighten spacing only, keep row layout ─────────────────── */
+/* ── Mobile — keep row, scale both image and text down ──────────────────── */
 @media (max-width: 768px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 16px 0;
@@ -88,11 +88,16 @@
     padding: 4px 8px;
   }
 
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
+    max-height: 48px;          /* scaled down for mobile */
+  }
+
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
     padding: 4px 10px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
-    font-size: clamp(1rem, 5.5vw, 52px); /* same formula — vw handles scaling */
+    font-size: 11vw;           /* scales with mobile viewport width */
+    white-space: nowrap;
   }
 }
