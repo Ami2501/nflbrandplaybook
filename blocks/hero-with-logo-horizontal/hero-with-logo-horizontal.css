@@ -14,7 +14,7 @@
   box-sizing: border-box;
 }
 
-/* ── Inner flex row: always row, never stacks ───────────────────────────── */
+/* ── Inner flex row: always row ─────────────────────────────────────────── */
 .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
   display: flex;
   flex-direction: row;
@@ -46,7 +46,7 @@
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
   display: block;
-  max-height: 140px;           /* fixed desktop size */
+  max-height: 140px;
   width: auto;
   object-fit: contain;
 }
@@ -68,20 +68,18 @@
   padding: 0;
   font-family: var(--heading-font-family);
   font-weight: 900;
-  font-size: 72px;             /* fixed — fits within 1200px after logo */
+  font-size: 72px;
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
   white-space: nowrap;
   color: var(--nfl-impact-blue);
-  overflow: visible;
-  text-overflow: unset;
 }
 
-/* ── Mobile — keep row, scale both image and text down ──────────────────── */
+/* ── Tablet ──────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
-    padding: 16px 0;
+    padding: 20px 0;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
@@ -89,7 +87,7 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 48px;          /* scaled down for mobile */
+    max-height: 64px;          /* reduced from 48px — balances with text */
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
@@ -97,7 +95,19 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
-    font-size: 11vw;           /* scales with mobile viewport width */
+    font-size: 8vw;            /* reduced from 11vw */
+    white-space: nowrap;
+  }
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
+    max-height: 40px;
+  }
+
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
+    font-size: 7vw;            /* smaller still on narrow phones */
     white-space: nowrap;
   }
 }
