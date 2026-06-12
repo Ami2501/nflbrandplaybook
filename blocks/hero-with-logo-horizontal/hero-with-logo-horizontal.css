@@ -17,7 +17,7 @@
 /* ── Inner flex row: logo + title on one line, no gap ───────────────────── */
 .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
   display: flex;
-  flex-direction: row;
+  flex-direction: row;        /* always row — never stacks */
   align-items: center;
   justify-content: flex-start;
   gap: 0;
@@ -46,7 +46,7 @@
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
   display: block;
-  max-height: min(140px, 18vw);           /* updated from 56px */
+  max-height: min(140px, 18vw); /* scales fluidly — caps at 140px */
   width: auto;
   object-fit: contain;
 }
@@ -68,42 +68,27 @@
   padding: 0;
   font-family: var(--heading-font-family);
   font-weight: 900;
-  font-size: 3vw; 
+  font-size: 4vw;              /* scales with viewport — same on all screens */
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  white-space: nowrap;
+  white-space: nowrap;         /* never wraps */
   color: var(--nfl-impact-blue);
   overflow: visible;
   text-overflow: unset;
 }
 
-/* ── Responsive ──────────────────────────────────────────────────────────── */
+/* ── Responsive — only adjust padding/spacing, never stack ──────────────── */
 @media (max-width: 768px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 24px 0;
+    padding: 16px 0;           /* less vertical padding on mobile */
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
-    width: 100%;
-    justify-content: flex-start;
-    padding: 8px 12px;
-  }
-
-  .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 100px;         /* slightly smaller on mobile */
-    width: auto;
+    padding: 4px 8px;          /* tighter logo padding */
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
-    width: 100%;
-    padding: 10px 12px;
-  }
-
-  .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
-    font-size: 5.5vw;
-    white-space: nowrap;
+    padding: 4px 10px;         /* tighter title padding */
   }
 }
