@@ -7,7 +7,7 @@
 
 /* ── Block container ─────────────────────────────────────────────────────── */
 .hero-with-logo-horizontal {
-  max-width: var(--page-width, 1200px);
+  max-width: var(--section-max-width, 1200px);
   width: 100%;
   margin: 0 auto;
   padding: 0 var(--spacing-m, 24px);
@@ -46,7 +46,7 @@
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
   display: block;
-  max-height: 56px;
+  max-height: 140px;
   width: auto;
   object-fit: contain;
 }
