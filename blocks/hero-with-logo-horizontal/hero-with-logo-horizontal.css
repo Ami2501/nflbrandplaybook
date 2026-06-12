@@ -76,38 +76,51 @@
   color: var(--nfl-impact-blue);
 }
 
-/* ── Tablet ──────────────────────────────────────────────────────────────── */
+/* ── Tablet ≤ 768px ──────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 20px 0;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
-    padding: 4px 8px;
+    padding: 4px 6px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 64px;          /* reduced from 48px — balances with text */
+    max-height: 56px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
-    padding: 4px 10px;
+    padding: 4px 8px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
-    font-size: 8vw;            /* reduced from 11vw */
+    font-size: 7vw;
     white-space: nowrap;
   }
 }
 
-/* ── Mobile ──────────────────────────────────────────────────────────────── */
+/* ── Mobile ≤ 480px (iPhone 14 Pro Max = 430px) ─────────────────────────── */
 @media (max-width: 480px) {
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
+    padding: 12px 0;
+  }
+
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
+    padding: 2px 4px;          /* minimal padding to save space */
+    flex: 0 0 auto;
+  }
+
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 40px;
+    max-height: 32px;          /* small but visible */
+  }
+
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
+    padding: 2px 6px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
-    font-size: 7vw;            /* smaller still on narrow phones */
+    font-size: 5.5vw;          /* ~24px at 430px — fits full headline */
     white-space: nowrap;
   }
 }
