@@ -24,7 +24,7 @@
   padding: 32px 0;
   width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;           /* was hidden — was clipping wrapped text */
 }
 
 /* ── Logo (left) ─────────────────────────────────────────────────────────── */
@@ -80,7 +80,7 @@
 @media (max-width: 768px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 20px 0;
-    align-items: flex-start;   /* align to top when text wraps */
+    align-items: flex-start;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
@@ -97,7 +97,8 @@
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
     font-size: 7vw;
-    white-space: normal;       /* allow wrapping on tablet */
+    white-space: normal;       /* wrap freely */
+    word-break: break-word;    /* break long words if needed */
     line-height: 1.1;
   }
 }
@@ -122,8 +123,9 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
-    font-size: 6vw;            /* ~26px at 430px */
-    white-space: normal;       /* wraps onto next line if needed */
+    font-size: 6vw;
+    white-space: normal;       /* wrap freely */
+    word-break: break-word;
     line-height: 1.1;
   }
 }
