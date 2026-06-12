@@ -46,7 +46,7 @@
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
   display: block;
-  max-height: 140px;
+  max-height: 140px;           /* updated from 56px */
   width: auto;
   object-fit: contain;
 }
@@ -68,14 +68,14 @@
   padding: 0;
   font-family: var(--heading-font-family);
   font-weight: 900;
-  /*font-size: 3vw;     */         /* smoothly scales with viewport width */
+  font-size: 4vw;
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  white-space: nowrap;         /* keep on one line */
+  white-space: nowrap;
   color: var(--nfl-impact-blue);
-  overflow: visible;           /* no clipping */
-  text-overflow: unset;        /* no ellipsis */
+  overflow: visible;
+  text-overflow: unset;
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────── */
@@ -93,7 +93,8 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 44px;
+    max-height: 100px;         /* slightly smaller on mobile */
+    width: auto;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
@@ -102,7 +103,7 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
-    font-size: 6vw;            /* slightly larger vw unit on narrow screens */
-    white-space: normal;       /* allow wrap on very small screens */
+    font-size: 5.5vw;
+    white-space: nowrap;
   }
 }
