@@ -1,3 +1,4 @@
+/* ── Video Carousel ──────────────────────────────────────────────────────── */
 .video-carousel {
   position: relative;
   width: 100%;
@@ -36,13 +37,14 @@
   display: block;
 }
 
-/* MP4 */
+/* MP4 — key fix: contain instead of cover, no max-height cap */
 .video-carousel-player {
   width: 100%;
   height: auto;
-  max-height: 80vh;
-  object-fit: cover;
+  aspect-ratio: 16 / 9;    /* enforces correct ratio — no cropping */
+  object-fit: contain;      /* was cover — was cropping the video */
   display: block;
+  background: #000;         /* black bars if aspect ratio differs */
 }
 
 /* Prev / Next */
@@ -154,6 +156,6 @@
   }
 
   .video-carousel-player {
-    max-height: 60vh;
+    aspect-ratio: 16 / 9;  /* maintain ratio on mobile too */
   }
 }
