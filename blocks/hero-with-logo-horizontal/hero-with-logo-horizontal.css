@@ -46,7 +46,7 @@
 
 .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
   display: block;
-  max-height: 140px;
+  max-height: 147px;           /* 140px + 5% */
   width: auto;
   object-fit: contain;
 }
@@ -76,7 +76,7 @@
   color: var(--nfl-impact-blue);
 }
 
-/* ── All tablets 768px–1025px (iPad Mini, Air, Pro, Surface Pro) ─────────── */
+/* ── All tablets 768px–1025px ────────────────────────────────────────────── */
 @media (min-width: 768px) and (max-width: 1025px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 20px 0;
@@ -88,7 +88,7 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 110px;         /* covers iPad Air, iPad Pro, Surface Pro */
+    max-height: 116px;         /* 110px + 5% */
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
@@ -116,7 +116,7 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 56px;
+    max-height: 59px;          /* 56px + 5% */
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
