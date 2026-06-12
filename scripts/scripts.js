@@ -163,28 +163,31 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
-  loadHeader(doc.querySelector('header'));
-
   const main = doc.querySelector('main');
-  await loadSections(main);
+
+  // Await everything so all links are in the DOM before we query
+  await Promise.all([
+    loadHeader(doc.querySelector('header')),
+    loadSections(main),
+    loadFooter(doc.querySelector('footer')),
+  ]);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadFooter(doc.querySelector('footer'));
-
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
-  // Open all external links in a new tab
-  main.querySelectorAll('a[href]').forEach((a) => {
+
+  // All links now exist in DOM — query the full document
+  document.querySelectorAll('a[href]').forEach((a) => {
     const isExternal = a.hostname && a.hostname !== window.location.hostname;
     if (isExternal) {
       a.setAttribute('target', '_blank');
       a.setAttribute('rel', 'noopener noreferrer');
     }
   });
-  }
+}
 
 /**
  * Loads everything that happens a lot later,
