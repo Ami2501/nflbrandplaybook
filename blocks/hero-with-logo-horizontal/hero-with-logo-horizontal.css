@@ -76,7 +76,7 @@
   color: var(--nfl-impact-blue);
 }
 
-/* ── Tablet ≤ 1024px ─────────────────────────────────────────────────────── */
+/* ── Tablet ≤ 1024px — iPad Pro, Surface ────────────────────────────────── */
 @media (max-width: 1024px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 20px 0;
@@ -88,7 +88,7 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 80px;          /* bigger — was 56px */
+    max-height: 80px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
@@ -104,6 +104,13 @@
   }
 }
 
+/* ── iPad Air, iPad Mini — 768px–820px ───────────────────────────────────── */
+@media (min-width: 768px) and (max-width: 820px) {
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
+    max-height: 110px;         /* more prominent on iPad Air */
+  }
+}
+
 /* ── Mobile ≤ 480px ──────────────────────────────────────────────────────── */
 @media (max-width: 480px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
@@ -116,7 +123,7 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 56px;          /* bigger — was 40px */
+    max-height: 56px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
