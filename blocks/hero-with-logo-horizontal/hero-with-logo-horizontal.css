@@ -72,7 +72,7 @@
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  white-space: nowrap;
+  white-space: nowrap;         /* single line on desktop */
   color: var(--nfl-impact-blue);
 }
 
@@ -80,10 +80,11 @@
 @media (max-width: 768px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 20px 0;
+    align-items: flex-start;   /* align to top when text wraps */
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
-    padding: 4px 6px;
+    padding: 4px 8px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
@@ -91,36 +92,38 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
-    padding: 4px 8px;
+    padding: 4px 10px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
     font-size: 7vw;
-    white-space: nowrap;
+    white-space: normal;       /* allow wrapping on tablet */
+    line-height: 1.1;
   }
 }
 
-/* ── Mobile ≤ 480px (iPhone 14 Pro Max = 430px) ─────────────────────────── */
+/* ── Mobile ≤ 480px ──────────────────────────────────────────────────────── */
 @media (max-width: 480px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 12px 0;
+    align-items: flex-start;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
-    padding: 2px 4px;          /* minimal padding to save space */
-    flex: 0 0 auto;
-  }
-
-  .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 32px;          /* small but visible */
-  }
-
-  .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
     padding: 2px 6px;
   }
 
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
+    max-height: 40px;
+  }
+
+  .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
+    padding: 2px 8px;
+  }
+
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
-    font-size: 5.5vw;          /* ~24px at 430px — fits full headline */
-    white-space: nowrap;
+    font-size: 6vw;            /* ~26px at 430px */
+    white-space: normal;       /* wraps onto next line if needed */
+    line-height: 1.1;
   }
 }
