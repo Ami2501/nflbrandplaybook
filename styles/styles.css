@@ -26,6 +26,7 @@
   /* Typography */
   --body-font-family: 'All-Pro Sans', roboto, system-ui, 'Helvetica Neue', helvetica, arial, sans-serif;
   --heading-font-family: 'All-Pro Display', roboto-condensed, roboto, system-ui, 'Helvetica Neue', helvetica, arial, sans-serif;
+  --heading-main-font-family: 'All-Pro Display B', roboto-condensed, roboto, system-ui, 'Helvetica Neue', helvetica, arial, sans-serif;  
   --body-font-size-m: 18px;
   --body-font-size-s: 16px;
   --body-font-size-xs: 14px;
