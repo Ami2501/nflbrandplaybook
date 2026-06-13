@@ -22,23 +22,28 @@
   display: block;
 }
 
-/* YouTube wrapper */
+/* Both wrappers use padding-bottom to enforce 16:9 */
 .video-carousel-youtube-wrapper,
 .video-carousel-mp4-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 */
   overflow: hidden;
+  background: #000;
 }
 
+/* YouTube iframe fills wrapper */
 .video-carousel-youtube {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 100%;
   border: none;
   display: block;
 }
 
-/* MP4 */
+/* MP4 video fills wrapper */
 .video-carousel-player {
   position: absolute;
   inset: 0;
