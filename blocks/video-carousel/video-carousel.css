@@ -7,7 +7,7 @@
 
 .video-carousel-track {
   position: relative;
-  width: 100%; 
+  width: 100%;
 }
 
 /* All slides hidden by default */
@@ -27,6 +27,8 @@
 .video-carousel-mp4-wrapper {
   position: relative;
   width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
 }
 
 .video-carousel-youtube {
@@ -38,9 +40,10 @@
 
 /* MP4 */
 .video-carousel-player {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
-  max-height: 80vh;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
@@ -151,9 +154,5 @@
   .video-carousel-next {
     width: 36px;
     height: 36px;
-  }
-
-  .video-carousel-player {
-    max-height: 60vh;
   }
 }
