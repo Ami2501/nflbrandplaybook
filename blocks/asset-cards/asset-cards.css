@@ -1,10 +1,9 @@
-/* ── Grid ── */
 .asset-cards > ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: 1fr;        /* mobile: single column */
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
 
@@ -12,15 +11,14 @@
   display: flex;
 }
 
-/* ── Base card ── */
 .asset-cards .asset-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 140px;
-  padding: 24px 16px;
+  min-height: 160px;
+  padding: 32px 16px;
   background-color: var(--nfl-shield-blue);
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 16px;
@@ -35,7 +33,7 @@
   transform: translateY(-3px);
 }
 
-/* ── Image preview cards ── */
+/* Image preview cards */
 .asset-cards .asset-card.has-image {
   padding: 0;
   align-items: stretch;
@@ -67,7 +65,6 @@
   padding: 20px 16px;
 }
 
-/* ── Typography ── */
 .asset-cards .asset-card h2 {
   color: #fff;
   font-family: var(--heading-font-family);
@@ -84,7 +81,7 @@
   font-size: var(--heading-font-size-xl);
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  margin: 0;
+  margin: 0; /* ← was 0 0 8px, no subtitle below */
   line-height: 1.2;
 }
 
@@ -95,7 +92,7 @@
   margin: 0;
 }
 
-/* ── Full-width variant ── */
+/* Full-width variant for single-column cards */
 .asset-cards.full > ul {
   grid-template-columns: 1fr;
 }
@@ -106,9 +103,9 @@
   min-height: 140px;
 }
 
-/* ── Accent variant ── */
+/* Accent card variant */
 .asset-cards.accent .asset-card {
-  background: var(--nfl-shield-blue);
+  background:  var(--nfl-shield-blue);
   border-color: var(--nfl-impact-blue);
 }
 
@@ -125,42 +122,13 @@
   color: #fff;
 }
 
-/* ── Tablet: 2 columns ── */
-@media (width >= 600px) {
-  .asset-cards > ul {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-
-  .asset-cards.full > ul {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ── Desktop: 3 columns ── */
 @media (width >= 900px) {
   .asset-cards > ul {
-    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
 
   .asset-cards .asset-card {
     min-height: 180px;
     padding: 40px 24px;
-  }
-
-  .asset-cards.full > ul {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ── Wide: 4 columns ── */
-@media (width >= 1200px) {
-  .asset-cards > ul {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .asset-cards.full > ul {
-    grid-template-columns: 1fr;
   }
 }
