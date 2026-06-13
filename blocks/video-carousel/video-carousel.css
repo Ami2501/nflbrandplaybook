@@ -22,34 +22,26 @@
   display: block;
 }
 
-/* Both wrappers use padding-bottom to enforce 16:9 */
+/* Both wrappers size to content */
 .video-carousel-youtube-wrapper,
 .video-carousel-mp4-wrapper {
   position: relative;
   width: 100%;
-  height: 0;
-  padding-bottom: 56.25%; /* 16:9 */
-  overflow: hidden;
   background: #000;
 }
 
-/* YouTube iframe fills wrapper */
+/* YouTube iframe */
 .video-carousel-youtube {
-  position: absolute;
-  inset: 0;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16 / 9;
   border: none;
   display: block;
 }
 
-/* MP4 video fills wrapper */
+/* MP4 video — natural size, no cropping */
 .video-carousel-player {
-  position: absolute;
-  inset: 0;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
 }
 
