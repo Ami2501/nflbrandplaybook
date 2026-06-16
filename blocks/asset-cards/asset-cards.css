@@ -95,12 +95,32 @@
   line-height: 1.2;
 }
 
-.asset-cards .asset-card p {
+.asset-cards .asset-card-subtitle {
   color: rgb(255 255 255 / 50%);
   font-size: var(--body-font-size-xs);
   font-weight: 600;
-  margin: 0;
   line-height: 1.4;
+}
+
+.asset-cards .asset-card-subtitle p {
+  margin: 0;
+}
+
+.asset-cards .asset-card-subtitle strong,
+.asset-cards .asset-card-subtitle b {
+  color: #fff;
+  font-weight: 700;
+}
+
+.asset-cards .asset-card-subtitle em,
+.asset-cards .asset-card-subtitle i {
+  font-style: italic;
+}
+
+.asset-cards .asset-card-subtitle a {
+  color: inherit;
+  text-decoration: underline;
+  pointer-events: none;
 }
 
 /* Full-width variant */
@@ -129,7 +149,7 @@
   color: var(--nfl-impact-blue);
 }
 
-.asset-cards.accent .asset-card p {
+.asset-cards.accent .asset-card-subtitle {
   color: #fff;
 }
 
