@@ -5,15 +5,16 @@ export default function decorate(block) {
     const li = document.createElement('li');
     const cols = [...row.children];
 
-    // Supported formats:
-    // 1) Old: [image+title] [link]
-    // 2) New: [image+title] [subtext] [link]
-    const picture = cols[0]?.querySelector('picture');
-    const title = cols[0]?.textContent.trim() || '';
-    const subtext = cols.length >= 3 ? (cols[1]?.textContent.trim() || '') : '';
-    const link = cols.length >= 3
-      ? cols[2]?.querySelector('a')
-      : cols[1]?.querySelector('a');
+    const firstCol = cols[0];
+    const picture = firstCol?.querySelector('picture');
+    const title = firstCol?.textContent.trim() || '';
+
+    // Find the column that contains the card link
+    const linkCol = cols.find((col, index) => index > 0 && col.querySelector('a'));
+    const link = linkCol?.querySelector('a');
+
+    // Any other column after the first is treated as subtitle
+    const subtitleCol = cols.find((col, index) => index > 0 && col !== linkCol);
 
     const card = document.createElement('a');
     card.className = 'asset-card';
@@ -31,7 +32,6 @@ export default function decorate(block) {
       card.setAttribute('aria-label', title);
     }
 
-    // Image
     if (picture) {
       const imgWrap = document.createElement('div');
       imgWrap.className = 'asset-card-image';
@@ -39,7 +39,6 @@ export default function decorate(block) {
       card.append(imgWrap);
     }
 
-    // Text
     const textWrap = document.createElement('div');
     textWrap.className = 'asset-card-text';
 
@@ -47,10 +46,26 @@ export default function decorate(block) {
     h3.textContent = title;
     textWrap.append(h3);
 
-    if (subtext) {
-      const p = document.createElement('p');
-      p.textContent = subtext;
-      textWrap.append(p);
+    if (subtitleCol) {
+      const subtitleWrap = document.createElement('div');
+      subtitleWrap.className = 'asset-card-subtitle';
+
+      const subtitleContent = subtitleCol.cloneNode(true);
+
+      // Remove links from subtitle so the whole card remains the single clickable target
+      subtitleContent.querySelectorAll('a').forEach((anchor) => {
+        const span = document.createElement('span');
+        span.innerHTML = anchor.innerHTML;
+        anchor.replaceWith(span);
+      });
+
+      // Remove pictures if any were authored there by mistake
+      subtitleContent.querySelectorAll('picture').forEach((el) => el.remove());
+
+      if (subtitleContent.innerHTML.trim()) {
+        subtitleWrap.innerHTML = subtitleContent.innerHTML;
+        textWrap.append(subtitleWrap);
+      }
     }
 
     card.append(textWrap);
