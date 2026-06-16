@@ -11,7 +11,7 @@
   display: flex;
 }
 
-/* ── Base card ── */
+/* Base card */
 .asset-cards .asset-card {
   display: flex;
   flex-direction: column;
@@ -34,10 +34,11 @@
   transform: translateY(-3px);
 }
 
-/* ── Image preview cards ── */
+/* Image preview cards */
 .asset-cards .asset-card.has-image {
   padding: 0;
   align-items: stretch;
+  justify-content: flex-start;
 }
 
 .asset-cards .asset-card-image {
@@ -62,11 +63,18 @@
   transform: scale(1.05);
 }
 
+.asset-cards .asset-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
 .asset-cards .asset-card.has-image .asset-card-text {
   padding: 20px 16px;
 }
 
-/* ── Typography ── */
+/* Typography */
 .asset-cards .asset-card h2 {
   color: #fff;
   font-family: var(--heading-font-family);
@@ -92,9 +100,10 @@
   font-size: var(--body-font-size-xs);
   font-weight: 600;
   margin: 0;
+  line-height: 1.4;
 }
 
-/* ── Full-width variant ── */
+/* Full-width variant */
 .asset-cards.full > ul {
   grid-template-columns: 1fr;
 }
@@ -105,7 +114,7 @@
   min-height: 140px;
 }
 
-/* ── Accent variant ── */
+/* Accent variant */
 .asset-cards.accent .asset-card {
   background: var(--nfl-shield-blue);
   border-color: var(--nfl-impact-blue);
@@ -124,7 +133,7 @@
   color: #fff;
 }
 
-/* ── Desktop: restore padding/min-height at 900px+ ── */
+/* Desktop */
 @media (width >= 900px) {
   .asset-cards > ul {
     gap: 20px;
@@ -136,7 +145,7 @@
   }
 }
 
-/* ── Mobile: single column stack ── */
+/* Mobile */
 @media (width <= 480px) {
   .asset-cards > ul {
     grid-template-columns: 1fr;
