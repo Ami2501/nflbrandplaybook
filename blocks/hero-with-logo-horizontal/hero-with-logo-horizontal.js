@@ -1,9 +1,12 @@
 export default function decorate(block) {
+  document.body.classList.add('dark-page');
+
   // Handle both table layout (two cells) and default-content (two paragraphs)
   const cells = [...block.querySelectorAll(':scope > div > div')];
   const paragraphs = [...block.querySelectorAll(':scope > p')];
 
-  let logoSource, titleSource;
+  let logoSource;
+  let titleSource;
 
   if (cells.length >= 2) {
     // Table layout: two cells
@@ -24,7 +27,7 @@ export default function decorate(block) {
   const inner = document.createElement('div');
   inner.className = 'hero-with-logo-horizontal-inner';
 
-  // ---- Logo (left) --------------------------------------------------------
+  // Logo
   const logoWrap = document.createElement('div');
   logoWrap.className = 'hero-with-logo-horizontal-logo';
   while (logoSource.firstChild) {
@@ -32,16 +35,15 @@ export default function decorate(block) {
   }
   inner.appendChild(logoWrap);
 
-  // ---- Title (right) — single line in blue --------------------------------
+  // Title
   const titleWrap = document.createElement('div');
   titleWrap.className = 'hero-with-logo-horizontal-title';
 
   const heading = document.createElement('h1');
   heading.textContent = (titleSource.textContent || '').trim();
-
   titleWrap.appendChild(heading);
-  inner.appendChild(titleWrap);
 
+  inner.appendChild(titleWrap);
   hero.appendChild(inner);
 
   // Replace block contents
