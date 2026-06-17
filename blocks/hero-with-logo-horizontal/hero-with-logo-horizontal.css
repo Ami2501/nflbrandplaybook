@@ -10,11 +10,11 @@
   max-width: var(--page-width, 1200px);
   width: 100%;
   margin: 0 auto;
-  padding: 0;                /* was: 0 var(--spacing-m, 24px) — flush left now */
+  padding: 0;                /* desktop: flush left */
   box-sizing: border-box;
 }
 
-/* Cancel any global section padding that wraps this block */
+/* Cancel any global section padding that wraps this block (desktop) */
 .section:has(.hero-with-logo-horizontal) {
   padding-left: 0;
   padding-right: 0;
@@ -39,7 +39,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px 8px 0;   /* removed left padding so logo sits flush left */
+  padding: 8px 12px 8px 0;   /* no left padding so logo sits flush left */
   margin: 0;
   background-color: transparent;
   box-sizing: border-box;
@@ -84,6 +84,16 @@
 
 /* ── All tablets 768px–1025px ────────────────────────────────────────────── */
 @media (min-width: 768px) and (max-width: 1025px) {
+  /* restore page gutter so block aligns with other elements */
+  .hero-with-logo-horizontal {
+    padding: 0 var(--spacing-m, 24px);
+  }
+
+  .section:has(.hero-with-logo-horizontal) {
+    padding-left: var(--spacing-m, 24px);
+    padding-right: var(--spacing-m, 24px);
+  }
+
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 20px 0;
     align-items: flex-start;
@@ -112,6 +122,16 @@
 
 /* ── Mobile ≤ 767px ──────────────────────────────────────────────────────── */
 @media (max-width: 767px) {
+  /* restore page gutter so block aligns with other elements */
+  .hero-with-logo-horizontal {
+    padding: 0 var(--spacing-m, 24px);
+  }
+
+  .section:has(.hero-with-logo-horizontal) {
+    padding-left: var(--spacing-m, 24px);
+    padding-right: var(--spacing-m, 24px);
+  }
+
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 12px 0;
     align-items: flex-start;
