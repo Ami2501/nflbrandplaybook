@@ -86,7 +86,7 @@
 @media (min-width: 768px) and (max-width: 1025px) {
   /* restore page gutter so block aligns with other elements */
   .hero-with-logo-horizontal {
-    padding: 0 var(--spacing-m, 24px);
+    padding: 0;
   }
 
   .section:has(.hero-with-logo-horizontal) {
