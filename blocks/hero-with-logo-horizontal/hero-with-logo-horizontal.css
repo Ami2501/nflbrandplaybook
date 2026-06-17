@@ -9,10 +9,12 @@
 .hero-with-logo-horizontal {
   max-width: var(--page-width, 1200px);
   width: 100%;
-  margin: 0 auto;
+  margin-left: 0;
+  margin-right: auto;
   padding: 0 var(--spacing-m, 24px);
   box-sizing: border-box;
 }
+
 
 /* ── Inner flex row: always row ─────────────────────────────────────────── */
 .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
