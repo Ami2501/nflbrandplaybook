@@ -121,8 +121,8 @@
 }
 
 /* ── Mobile ≤ 767px ──────────────────────────────────────────────────────── */
+/* ── Mobile ≤ 767px ──────────────────────────────────────────────────────── */
 @media (max-width: 767px) {
-  /* restore page gutter so block aligns with other elements */
   .hero-with-logo-horizontal {
     padding: 0 var(--spacing-m, 24px);
   }
@@ -135,25 +135,30 @@
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 12px 0;
     align-items: flex-start;
+    justify-content: flex-start;   /* content hugs the left */
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
     padding: 4px 8px 4px 0;
+    justify-content: flex-start;   /* logo flush left, not centered */
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 62px;          /* 59px + 5% */
+    max-height: 62px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
-    padding: 2px 8px;
+    padding: 2px 8px 2px 0;        /* no left pad on title */
+    justify-content: flex-start;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
     font-size: 6vw;
+    text-align: left;              /* force left alignment */
     white-space: normal;
     word-break: normal;
     overflow-wrap: break-word;
     line-height: 1.1;
   }
 }
+
