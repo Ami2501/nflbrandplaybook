@@ -1,21 +1,24 @@
 /* ── Wrapper ─────────────────────────────────────────────────────────────── */
 .hero-with-logo-horizontal-wrapper {
   width: 100%;
-  margin: 0;
-  padding: 0 !important;
   background-color: var(--color-background, #0a1f3c);
   box-sizing: border-box;
 }
 
+/* ── Block container ─────────────────────────────────────────────────────── */
 .hero-with-logo-horizontal {
+  max-width: var(--page-width, 1200px);
   width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 0;
+  margin: 0 auto;
+  padding: 0;                /* was: 0 var(--spacing-m, 24px) — flush left now */
   box-sizing: border-box;
 }
 
-
+/* Cancel any global section padding that wraps this block */
+.section:has(.hero-with-logo-horizontal) {
+  padding-left: 0;
+  padding-right: 0;
+}
 
 /* ── Inner flex row: always row ─────────────────────────────────────────── */
 .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
@@ -36,7 +39,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0px;
+  padding: 8px 12px 8px 0;   /* removed left padding so logo sits flush left */
   margin: 0;
   background-color: transparent;
   box-sizing: border-box;
@@ -87,7 +90,7 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
-    padding: 0px;
+    padding: 6px 10px 6px 0;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
@@ -111,23 +114,19 @@
 @media (max-width: 767px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 12px 0;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
-    padding: 4px;
-    align-items: center;
+    padding: 4px 8px 4px 0;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 48px;
-    width: auto;
+    max-height: 62px;          /* 59px + 5% */
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
-    padding: 2px;
-    display: flex;
-    align-items: center;
+    padding: 2px 8px;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
@@ -136,6 +135,5 @@
     word-break: normal;
     overflow-wrap: break-word;
     line-height: 1.1;
-    margin: 0;
   }
 }
