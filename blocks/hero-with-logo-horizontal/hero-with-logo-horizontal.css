@@ -115,7 +115,7 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
-    padding: 4px 8px;
+    padding: 4px;
     align-items: center;
   }
 
@@ -125,7 +125,7 @@
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
-    padding: 2px 8px;
+    padding: 2px;
     display: flex;
     align-items: center;
   }
