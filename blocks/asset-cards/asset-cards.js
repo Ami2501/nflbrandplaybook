@@ -5,58 +5,21 @@ export default function decorate(block) {
     const li = document.createElement('li');
     const cols = [...row.children];
 
-    if (!cols.length) {
-      return;
-    }
+    // First col = optional image + title; second col = link / subtitle
+    const picture = cols[0]?.querySelector('picture');
+    const title = cols[0]?.textContent.trim() || '';
+    const link = cols[1]?.querySelector('a');
 
-    const firstCol = cols[0];
-    const picture = firstCol.querySelector('picture');
-
-    const titleSource = firstCol.cloneNode(true);
-    titleSource.querySelectorAll('picture').forEach((el) => el.remove());
-    const title = titleSource.textContent.trim();
-
-    let link = null;
-    let linkColIndex = -1;
-
-    cols.forEach((col, index) => {
-      if (index === 0 || link) return;
-      const foundLink = col.querySelector('a');
-      if (foundLink) {
-        link = foundLink;
-        linkColIndex = index;
-      }
-    });
-
-    const subtitleFragments = cols
-      .filter((col, index) => index > 0 && index !== linkColIndex)
-      .map((col) => {
-        const clone = col.cloneNode(true);
-        clone.querySelectorAll('a').forEach((anchor) => {
-          const span = document.createElement('span');
-          span.innerHTML = anchor.innerHTML;
-          anchor.replaceWith(span);
-        });
-        clone.querySelectorAll('picture').forEach((el) => el.remove());
-        return clone.innerHTML.trim();
-      })
-      .filter(Boolean);
-
-    const subtitleHTML = subtitleFragments.join('');
+    // Subtitle can be any heading (h2–h6) or a <p> — preserve the element
+    const subtitleEl = cols[1]?.querySelector('h2, h3, h4, h5, h6, p');
 
     const card = document.createElement('a');
     card.className = 'asset-card';
-    card.href = link?.href || '#';
+    if (picture) card.classList.add('has-image');
 
-    if (picture) {
-      card.classList.add('has-image');
-    }
+    card.href = link ? link.href : '#';
 
-    const ariaLabel = link?.textContent?.trim() || title;
-    if (ariaLabel) {
-      card.setAttribute('aria-label', ariaLabel);
-    }
-
+    // Image preview
     if (picture) {
       const imgWrap = document.createElement('div');
       imgWrap.className = 'asset-card-image';
@@ -67,17 +30,30 @@ export default function decorate(block) {
     const textWrap = document.createElement('div');
     textWrap.className = 'asset-card-text';
 
-    if (title) {
-      const h3 = document.createElement('h3');
-      h3.textContent = title;
-      textWrap.append(h3);
-    }
+    // Title
+    const h3 = document.createElement('h3');
+    h3.textContent = title;
+    textWrap.append(h3);
 
-    if (subtitleHTML) {
-      const subtitleWrap = document.createElement('div');
-      subtitleWrap.className = 'asset-card-subtitle';
-      subtitleWrap.innerHTML = subtitleHTML;
-      textWrap.append(subtitleWrap);
+    // Subtitle — keep author's element type, just tag + move it
+    if (subtitleEl) {
+      subtitleEl.classList.add('asset-card-subtitle');
+      textWrap.append(subtitleEl);
+    } else if (link) {
+      // No explicit subtitle element, but a link exists — use its text
+      const p = document.createElement('p');
+      p.className = 'asset-card-subtitle';
+      p.textContent = link.textContent.trim();
+      textWrap.append(p);
+    } else {
+      // Fall back to plain text in col 2
+      const text = cols[1]?.textContent.trim();
+      if (text) {
+        const p = document.createElement('p');
+        p.className = 'asset-card-subtitle';
+        p.textContent = text;
+        textWrap.append(p);
+      }
     }
 
     card.append(textWrap);
