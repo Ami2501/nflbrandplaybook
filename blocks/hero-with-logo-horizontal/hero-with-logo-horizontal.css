@@ -124,7 +124,7 @@
 /* ── Mobile ≤ 767px ──────────────────────────────────────────────────────── */
 @media (max-width: 767px) {
   .hero-with-logo-horizontal {
-    padding: 0 var(--spacing-m, 24px);
+    padding: 0;
   }
 
   .section:has(.hero-with-logo-horizontal) {
