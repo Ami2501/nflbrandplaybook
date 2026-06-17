@@ -111,19 +111,23 @@
 @media (max-width: 767px) {
   .hero-with-logo-horizontal .hero-with-logo-horizontal-inner {
     padding: 12px 0;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo {
     padding: 4px 8px;
+    align-items: center;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-logo img {
-    max-height: 62px;          /* 59px + 5% */
+    max-height: 48px;
+    width: auto;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title {
     padding: 2px 8px;
+    display: flex;
+    align-items: center;
   }
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
@@ -132,5 +136,6 @@
     word-break: normal;
     overflow-wrap: break-word;
     line-height: 1.1;
+    margin: 0;
   }
 }
