@@ -156,7 +156,7 @@
 
   /* Move mute button up to avoid overlapping the next arrow */
   .video-carousel-controls {
-    bottom: 96px; /* was 48px */
+    bottom: 150px; /* was 48px */
   }
 }
 
