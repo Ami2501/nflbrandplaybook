@@ -2,24 +2,76 @@ export default function decorate(block) {
   const ul = document.createElement('ul');
 
   [...block.children].forEach((row) => {
-    const li = document.createElement('li');
     const cols = [...row.children];
 
-    // First col = optional image + title; second col = link / subtitle
-    const picture = cols[0]?.querySelector('picture');
-    const title = cols[0]?.textContent.trim() || '';
-    const link = cols[1]?.querySelector('a');
+    if (!cols.length) {
+      return;
+    }
 
-    // Subtitle can be any heading (h2–h6) or a <p> — preserve the element
-    const subtitleEl = cols[1]?.querySelector('h2, h3, h4, h5, h6, p');
+    const firstCol = cols[0];
+    const picture = firstCol?.querySelector('picture');
+
+    const titleSource = firstCol?.cloneNode(true);
+    titleSource?.querySelectorAll('picture, a').forEach((el) => {
+      if (el.tagName === 'A') {
+        const span = document.createElement('span');
+        span.innerHTML = el.innerHTML;
+        el.replaceWith(span);
+      } else {
+        el.remove();
+      }
+    });
+    const title = titleSource?.textContent.trim() || '';
+
+    // Find the column that contains the link
+    let link = null;
+    let linkColIndex = -1;
+    cols.forEach((col, index) => {
+      if (index === 0 || link) return;
+      const foundLink = col.querySelector('a');
+      if (foundLink) {
+        link = foundLink;
+        linkColIndex = index;
+      }
+    });
+
+    // Subtitle = any column after the first that is NOT the link column
+    const subtitleFragments = cols
+      .filter((col, index) => index > 0 && index !== linkColIndex)
+      .map((col) => {
+        const clone = col.cloneNode(true);
+        clone.querySelectorAll('a').forEach((anchor) => {
+          const span = document.createElement('span');
+          span.innerHTML = anchor.innerHTML;
+          anchor.replaceWith(span);
+        });
+        clone.querySelectorAll('picture').forEach((el) => el.remove());
+        return clone.innerHTML.trim();
+      })
+      .filter(Boolean);
+
+    const subtitleHTML = subtitleFragments.join('');
 
     const card = document.createElement('a');
     card.className = 'asset-card';
-    if (picture) card.classList.add('has-image');
+    card.href = link?.href || '#';
 
-    card.href = link ? link.href : '#';
+    if (link?.target) {
+      card.target = link.target;
+      if (link.target === '_blank') {
+        card.rel = 'noopener noreferrer';
+      }
+    }
 
-    // Image preview
+    if (picture) {
+      card.classList.add('has-image');
+    }
+
+    const ariaLabel = link?.textContent?.trim() || title;
+    if (ariaLabel) {
+      card.setAttribute('aria-label', ariaLabel);
+    }
+
     if (picture) {
       const imgWrap = document.createElement('div');
       imgWrap.className = 'asset-card-image';
@@ -30,33 +82,22 @@ export default function decorate(block) {
     const textWrap = document.createElement('div');
     textWrap.className = 'asset-card-text';
 
-    // Title
-    const h3 = document.createElement('h3');
-    h3.textContent = title;
-    textWrap.append(h3);
+    if (title) {
+      const h3 = document.createElement('h3');
+      h3.textContent = title;
+      textWrap.append(h3);
+    }
 
-    // Subtitle — keep author's element type, just tag + move it
-    if (subtitleEl) {
-      subtitleEl.classList.add('asset-card-subtitle');
-      textWrap.append(subtitleEl);
-    } else if (link) {
-      // No explicit subtitle element, but a link exists — use its text
-      const p = document.createElement('p');
-      p.className = 'asset-card-subtitle';
-      p.textContent = link.textContent.trim();
-      textWrap.append(p);
-    } else {
-      // Fall back to plain text in col 2
-      const text = cols[1]?.textContent.trim();
-      if (text) {
-        const p = document.createElement('p');
-        p.className = 'asset-card-subtitle';
-        p.textContent = text;
-        textWrap.append(p);
-      }
+    if (subtitleHTML) {
+      const subtitleWrap = document.createElement('div');
+      subtitleWrap.className = 'asset-card-subtitle';
+      subtitleWrap.innerHTML = subtitleHTML;
+      textWrap.append(subtitleWrap);
     }
 
     card.append(textWrap);
+
+    const li = document.createElement('li');
     li.append(card);
     ul.append(li);
   });
