@@ -156,7 +156,7 @@
 
   .hero-with-logo-horizontal .hero-with-logo-horizontal-title h1 {
     font-size: 6vw;
-    text-align: center;            /* center the headline text */
+    /* text-align: center;            /* center the headline text */ */
     white-space: normal;
     word-break: normal;
     overflow-wrap: break-word;
