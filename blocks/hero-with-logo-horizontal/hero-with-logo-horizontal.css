@@ -3,6 +3,7 @@
   width: 100%;
   background-color: var(--color-background, #0a1f3c);
   box-sizing: border-box;
+    padding-left: 0 !important;
 }
 
 /* ── Block container ─────────────────────────────────────────────────────── */
