@@ -198,19 +198,13 @@ export default function decorate(block) {
     <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="currentColor"/>
   </svg>`;
 
-  // Dots
+  let current = 0;
+
+  // Create dots container first (empty) so updateDots can reference it
   const dots = document.createElement('div');
   dots.classList.add('video-carousel-dots');
-  slides.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.classList.add('video-carousel-dot');
-    if (i === 0) dot.classList.add('active');
-    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-    dot.addEventListener('click', () => goTo(i));
-    dots.append(dot);
-  });
 
-  let current = 0;
+  // ─── Inner functions (must be defined before use) ───────────────────────
 
   function sendYTCommand(iframe, func) {
     if (!iframe) return;
@@ -277,6 +271,17 @@ export default function decorate(block) {
     updateDots(current);
     setTimeout(() => startSlide(current), 150);
   }
+
+  // ─── Now populate dots (goTo is defined above) ──────────────────────────
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.classList.add('video-carousel-dot');
+    if (i === 0) dot.classList.add('active');
+    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    dot.addEventListener('click', () => goTo(i));
+    dots.append(dot);
+  });
 
   prev.addEventListener('click', () => goTo(current - 1));
   next.addEventListener('click', () => goTo(current + 1));
