@@ -9,12 +9,10 @@ export default function decorate(block) {
 
   if (cells.length >= 2) {
     // Table layout: two cells
-    logoSource = cells[0];
-    titleSource = cells[1];
+    [logoSource, titleSource] = cells;
   } else if (paragraphs.length >= 2) {
     // Default content layout: two paragraphs
-    logoSource = paragraphs[0];
-    titleSource = paragraphs[1];
+    [logoSource, titleSource] = paragraphs;
   } else {
     return;
   }
