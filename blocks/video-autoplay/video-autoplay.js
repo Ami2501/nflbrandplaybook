@@ -63,4 +63,3 @@ export default function decorate(block) {
     video.play();
   });
 }
-
