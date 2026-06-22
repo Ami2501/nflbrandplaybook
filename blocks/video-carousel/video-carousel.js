@@ -1,3 +1,151 @@
+// ─── URL Helpers ──────────────────────────────────────────────────────────
+
+
+function cleanUrl(url) {
+  if (!url) return url;
+  const match = url.match(/\((https?:\/\/[^)]+)\)/);
+  if (match) return match[1];
+  return url;
+}
+
+function getVideoType(url) {
+  if (!url) return 'mp4';
+  const cleaned = cleanUrl(url);
+  if (cleaned.includes('youtube.com') || cleaned.includes('youtu.be')) return 'youtube';
+  return 'mp4';
+}
+
+function getYouTubeId(url) {
+  const cleaned = cleanUrl(url);
+  try {
+    const u = new URL(cleaned);
+    if (u.hostname === 'youtu.be') {
+      return u.pathname.slice(1).split('?')[0];
+    }
+    if (u.hostname.includes('youtube.com')) {
+      return u.searchParams.get('v') || u.pathname.split('/').pop();
+    }
+  } catch (e) {
+    // fallback regex
+  }
+  const match = cleaned.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : '';
+}
+
+// ─── Icons ────────────────────────────────────────────────────────────────
+
+function mutedIcon() {
+  return `<svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+    <path d="M16.5 12A4.5 4.5 0 0 0 14 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5
+      0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86
+      5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25
+      1.18v2.06A8.99 8.99 0 0 0 17.73 19L19 20.27 20.27 19 5.27 2 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+  </svg>`;
+}
+
+function unmutedIcon() {
+  return `<svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73
+      2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5
+      6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+  </svg>`;
+}
+
+// ─── Slide Builders ───────────────────────────────────────────────────────
+
+function buildYouTubeSlide(slide) {
+  const cleanedSrc = cleanUrl(slide.src);
+  const id = getYouTubeId(cleanedSrc);
+
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('video-carousel-youtube-wrapper');
+
+  if (!id) {
+    wrapper.textContent = `Could not extract YouTube ID from: ${slide.src}`;
+    return wrapper;
+  }
+
+  const iframe = document.createElement('iframe');
+  iframe.setAttribute(
+    'src',
+    `[youtube.com](https://www.youtube.com/embed/${id}?enablejsapi=1&mute=1&autoplay=0&rel=0&modestbranding=1&playsinline=1)`,
+  );
+  iframe.setAttribute('allow', 'autoplay; encrypted-media; fullscreen');
+  iframe.setAttribute('allowfullscreen', '');
+  iframe.setAttribute('title', slide.caption || 'YouTube video');
+  iframe.classList.add('video-carousel-youtube');
+
+  const controls = document.createElement('div');
+  controls.classList.add('video-carousel-controls');
+
+  const muteBtn = document.createElement('button');
+  muteBtn.classList.add('video-carousel-mute-btn');
+  muteBtn.setAttribute('aria-label', 'Unmute video');
+  muteBtn.innerHTML = mutedIcon();
+
+  let isMuted = true;
+  muteBtn.addEventListener('click', () => {
+    isMuted = !isMuted;
+    try {
+      iframe.contentWindow.postMessage(
+        JSON.stringify({
+          event: 'command',
+          func: isMuted ? 'mute' : 'unMute',
+          args: [],
+        }),
+        '[youtube.com](https://www.youtube.com)',
+      );
+    } catch (e) {
+      // iframe not ready
+    }
+    muteBtn.innerHTML = isMuted ? mutedIcon() : unmutedIcon();
+    muteBtn.setAttribute('aria-label', isMuted ? 'Unmute video' : 'Mute video');
+  });
+
+  controls.append(muteBtn);
+  wrapper.append(iframe);
+  wrapper.append(controls);
+  return wrapper;
+}
+
+function buildMp4Slide(slide) {
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('video-carousel-mp4-wrapper');
+
+  const video = document.createElement('video');
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('loop', '');
+  video.setAttribute('preload', 'metadata');
+  video.classList.add('video-carousel-player');
+
+  const source = document.createElement('source');
+  source.setAttribute('src', cleanUrl(slide.src));
+  source.setAttribute('type', `video/${slide.src.split('.').pop().split('?')[0]}`);
+  video.append(source);
+
+  const controls = document.createElement('div');
+  controls.classList.add('video-carousel-controls');
+
+  const muteBtn = document.createElement('button');
+  muteBtn.classList.add('video-carousel-mute-btn');
+  muteBtn.setAttribute('aria-label', 'Unmute video');
+  muteBtn.innerHTML = mutedIcon();
+
+  muteBtn.addEventListener('click', () => {
+    video.muted = !video.muted;
+    muteBtn.innerHTML = video.muted ? mutedIcon() : unmutedIcon();
+    muteBtn.setAttribute('aria-label', video.muted ? 'Unmute video' : 'Mute video');
+  });
+
+  controls.append(muteBtn);
+  wrapper.append(video);
+  wrapper.append(controls);
+  return wrapper;
+}
+
+// ─── Main Export ──────────────────────────────────────────────────────────
+
 export default function decorate(block) {
   const slides = [...block.children].map((row) => {
     const link = row.querySelector('a');
@@ -71,7 +219,7 @@ export default function decorate(block) {
     try {
       iframe.contentWindow.postMessage(
         JSON.stringify({ event: 'command', func, args: [] }),
-        '(https://www.youtube.com)',
+        '[youtube.com](https://www.youtube.com)',
       );
     } catch (e) {
       // iframe not ready
@@ -171,154 +319,4 @@ export default function decorate(block) {
   carousel.children[0].setAttribute('aria-hidden', 'false');
 
   observer.observe(block);
-}
-
-// ─── URL Helpers ──────────────────────────────────────────────────────────
-
-/**
- * DA Live rewrites external links as:
- * [your-site.aem.page](https://your-site.aem.page/)[display](https://real-url)
- * This extracts the real URL from inside the parentheses.
- */
-function cleanUrl(url) {
-  if (!url) return url;
-  const match = url.match(/\((https?:\/\/[^)]+)\)/);
-  if (match) return match[1];
-  return url;
-}
-
-function getVideoType(url) {
-  if (!url) return 'mp4';
-  const cleaned = cleanUrl(url);
-  if (cleaned.includes('youtube.com') || cleaned.includes('youtu.be')) return 'youtube';
-  return 'mp4';
-}
-
-function getYouTubeId(url) {
-  const cleaned = cleanUrl(url);
-  try {
-    const u = new URL(cleaned);
-    if (u.hostname === 'youtu.be') {
-      return u.pathname.slice(1).split('?')[0];
-    }
-    if (u.hostname.includes('youtube.com')) {
-      return u.searchParams.get('v') || u.pathname.split('/').pop();
-    }
-  } catch (e) {
-    // fallback regex
-  }
-  const match = cleaned.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-  return match ? match[1] : '';
-}
-
-// ─── Slide Builders ───────────────────────────────────────────────────────
-
-function buildYouTubeSlide(slide) {
-  const cleanedSrc = cleanUrl(slide.src);
-  const id = getYouTubeId(cleanedSrc);
-
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('video-carousel-youtube-wrapper');
-
-  if (!id) {
-    wrapper.textContent = `Could not extract YouTube ID from: ${slide.src}`;
-    return wrapper;
-  }
-
-  const iframe = document.createElement('iframe');
-  iframe.setAttribute(
-    'src',
-    `(https://www.youtube.com/embed/${id}?enablejsapi=1&mute=1&autoplay=0&rel=0&modestbranding=1&playsinline=1)`,
-  );
-  iframe.setAttribute('allow', 'autoplay; encrypted-media; fullscreen');
-  iframe.setAttribute('allowfullscreen', '');
-  iframe.setAttribute('title', slide.caption || 'YouTube video');
-  iframe.classList.add('video-carousel-youtube');
-
-  const controls = document.createElement('div');
-  controls.classList.add('video-carousel-controls');
-
-  const muteBtn = document.createElement('button');
-  muteBtn.classList.add('video-carousel-mute-btn');
-  muteBtn.setAttribute('aria-label', 'Unmute video');
-  muteBtn.innerHTML = mutedIcon();
-
-  let isMuted = true;
-  muteBtn.addEventListener('click', () => {
-    isMuted = !isMuted;
-    try {
-      iframe.contentWindow.postMessage(
-        JSON.stringify({
-          event: 'command',
-          func: isMuted ? 'mute' : 'unMute',
-          args: [],
-        }),
-        'https://www.youtube.com',
-      );
-    } catch (e) {
-      // iframe not ready
-    }
-    muteBtn.innerHTML = isMuted ? mutedIcon() : unmutedIcon();
-    muteBtn.setAttribute('aria-label', isMuted ? 'Unmute video' : 'Mute video');
-  });
-
-  controls.append(muteBtn);
-  wrapper.append(iframe);
-  wrapper.append(controls);
-  return wrapper;
-}
-
-function buildMp4Slide(slide) {
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('video-carousel-mp4-wrapper');
-
-  const video = document.createElement('video');
-  video.setAttribute('muted', '');
-  video.setAttribute('playsinline', '');
-  video.setAttribute('loop', '');
-  video.setAttribute('preload', 'metadata');
-  video.classList.add('video-carousel-player');
-
-  const source = document.createElement('source');
-  source.setAttribute('src', cleanUrl(slide.src));
-  source.setAttribute('type', `video/${slide.src.split('.').pop().split('?')[0]}`);
-  video.append(source);
-
-  const controls = document.createElement('div');
-  controls.classList.add('video-carousel-controls');
-
-  const muteBtn = document.createElement('button');
-  muteBtn.classList.add('video-carousel-mute-btn');
-  muteBtn.setAttribute('aria-label', 'Unmute video');
-  muteBtn.innerHTML = mutedIcon();
-
-  muteBtn.addEventListener('click', () => {
-    video.muted = !video.muted;
-    muteBtn.innerHTML = video.muted ? mutedIcon() : unmutedIcon();
-    muteBtn.setAttribute('aria-label', video.muted ? 'Unmute video' : 'Mute video');
-  });
-
-  controls.append(muteBtn);
-  wrapper.append(video);
-  wrapper.append(controls);
-  return wrapper;
-}
-
-// ─── Icons ────────────────────────────────────────────────────────────────
-
-function mutedIcon() {
-  return `<svg viewBox="0 0 24 24" width="20" height="20" fill="white">
-    <path d="M16.5 12A4.5 4.5 0 0 0 14 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5
-      0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86
-      5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25
-      1.18v2.06A8.99 8.99 0 0 0 17.73 19L19 20.27 20.27 19 5.27 2 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-  </svg>`;
-}
-
-function unmutedIcon() {
-  return `<svg viewBox="0 0 24 24" width="20" height="20" fill="white">
-    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73
-      2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5
-      6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-  </svg>`;
 }
