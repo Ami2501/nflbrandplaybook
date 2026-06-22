@@ -1,6 +1,5 @@
 export default function decorate(block) {
   document.body.classList.add('dark-page');
-
   // Handle both table layout (two cells) and default-content (two paragraphs)
   const cells = [...block.querySelectorAll(':scope > div > div')];
   const paragraphs = [...block.querySelectorAll(':scope > p')];
