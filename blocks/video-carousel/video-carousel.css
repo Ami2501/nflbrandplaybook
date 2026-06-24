@@ -146,10 +146,17 @@
 }
 
 /* Mobile */
+/* Mobile */
 @media (width <= 768px) {
   .video-carousel-prev,
   .video-carousel-next {
     width: 36px;
     height: 36px;
   }
+
+  /* Move mute button up to avoid overlapping the next arrow */
+  .video-carousel-controls {
+    bottom: 130px; /* was 48px */
+  }
 }
+

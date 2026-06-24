@@ -11,7 +11,7 @@
   display: flex;
 }
 
-/* ── Base card ── */
+/* Base card — whole card is the link */
 .asset-cards .asset-card {
   display: flex;
   flex-direction: column;
@@ -25,7 +25,12 @@
   border-radius: 16px;
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.asset-cards .asset-card * {
+  pointer-events: none;
 }
 
 .asset-cards .asset-card:hover {
@@ -34,10 +39,11 @@
   transform: translateY(-3px);
 }
 
-/* ── Image preview cards ── */
+/* Image preview cards */
 .asset-cards .asset-card.has-image {
   padding: 0;
   align-items: stretch;
+  justify-content: flex-start;
 }
 
 .asset-cards .asset-card-image {
@@ -62,11 +68,18 @@
   transform: scale(1.05);
 }
 
+.asset-cards .asset-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
 .asset-cards .asset-card.has-image .asset-card-text {
   padding: 20px 16px;
 }
 
-/* ── Typography ── */
+/* Typography */
 .asset-cards .asset-card h2 {
   color: #fff;
   font-family: var(--heading-font-family);
@@ -87,14 +100,29 @@
   line-height: 1.2;
 }
 
-.asset-cards .asset-card p {
+.asset-cards .asset-card-subtitle {
   color: rgb(255 255 255 / 50%);
   font-size: var(--body-font-size-xs);
   font-weight: 600;
+  line-height: 1.4;
+}
+
+.asset-cards .asset-card-subtitle p {
   margin: 0;
 }
 
-/* ── Full-width variant ── */
+.asset-cards .asset-card-subtitle strong,
+.asset-cards .asset-card-subtitle b {
+  color: #fff;
+  font-weight: 700;
+}
+
+.asset-cards .asset-card-subtitle em,
+.asset-cards .asset-card-subtitle i {
+  font-style: italic;
+}
+
+/* Full-width variant */
 .asset-cards.full > ul {
   grid-template-columns: 1fr;
 }
@@ -105,7 +133,7 @@
   min-height: 140px;
 }
 
-/* ── Accent variant ── */
+/* Accent variant */
 .asset-cards.accent .asset-card {
   background: var(--nfl-shield-blue);
   border-color: var(--nfl-impact-blue);
@@ -120,11 +148,11 @@
   color: var(--nfl-impact-blue);
 }
 
-.asset-cards.accent .asset-card p {
+.asset-cards.accent .asset-card-subtitle {
   color: #fff;
 }
 
-/* ── Desktop: restore padding/min-height at 900px+ ── */
+/* Desktop */
 @media (width >= 900px) {
   .asset-cards > ul {
     gap: 20px;
@@ -136,7 +164,7 @@
   }
 }
 
-/* ── Mobile: single column stack ── */
+/* Mobile */
 @media (width <= 480px) {
   .asset-cards > ul {
     grid-template-columns: 1fr;
